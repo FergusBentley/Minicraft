@@ -71,29 +71,26 @@ public class Entity {
 		int yt0 = ((y + ya) - yr) >> 4;
 		int xt1 = ((x + xa) + xr) >> 4;
 		int yt1 = ((y + ya) + yr) >> 4;
-		boolean blocked = false;
-		for (int yt = yt0; yt <= yt1; yt++)
+
+		for (int yt = yt0; yt <= yt1; yt++) {
 			for (int xt = xt0; xt <= xt1; xt++) {
 				if (xt >= xto0 && xt <= xto1 && yt >= yto0 && yt <= yto1) continue;
 				level.getTile(xt, yt).bumpedInto(level, xt, yt, this);
 				if (!level.getTile(xt, yt).mayPass(level, xt, yt, this)) {
-					blocked = true;
 					return false;
 				}
 			}
-		if (blocked) return false;
+		}
 
 		List<Entity> wasInside = level.getEntities(x - xr, y - yr, x + xr, y + yr);
 		List<Entity> isInside = level.getEntities(x + xa - xr, y + ya - yr, x + xa + xr, y + ya + yr);
-		for (int i = 0; i < isInside.size(); i++) {
-			Entity e = isInside.get(i);
+		for (Entity e : isInside) {
 			if (e == this) continue;
 
 			e.touchedBy(this);
 		}
 		isInside.removeAll(wasInside);
-		for (int i = 0; i < isInside.size(); i++) {
-			Entity e = isInside.get(i);
+		for (Entity e : isInside) {
 			if (e == this) continue;
 
 			if (e.blocks(this)) {

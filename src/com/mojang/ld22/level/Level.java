@@ -1,7 +1,6 @@
 package com.mojang.ld22.level;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -17,28 +16,24 @@ import com.mojang.ld22.level.levelgen.LevelGen;
 import com.mojang.ld22.level.tile.Tile;
 
 public class Level {
-	private Random random = new Random();
+	private final Random random = new Random();
 
-	public int w, h;
+	public final int w;
+	public final int h;
 
-	public byte[] tiles;
-	public byte[] data;
-	public List<Entity>[] entitiesInTiles;
+	public final byte[] tiles;
+	public final byte[] data;
+	public final List<Entity>[] entitiesInTiles;
 
-	public int grassColor = 141;
+	public final int grassColor = 141;
 	public int dirtColor = 322;
-	public int sandColor = 550;
-	private int depth;
+	public final int sandColor = 550;
+	private final int depth;
 	public int monsterDensity = 8;
 
-	public List<Entity> entities = new ArrayList<Entity>();
-	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
-		public int compare(Entity e0, Entity e1) {
-			if (e1.y < e0.y) return +1;
-			if (e1.y > e0.y) return -1;
-			return 0;
-		}
-
+	public final List<Entity> entities = new ArrayList<>();
+	private final Comparator<Entity> spriteSorter = (e0, e1) -> {
+		return Integer.compare(e0.y, e1.y);
 	};
 
 	@SuppressWarnings("unchecked")
@@ -99,7 +94,7 @@ public class Level {
 
 		entitiesInTiles = new ArrayList[w * h];
 		for (int i = 0; i < w * h; i++) {
-			entitiesInTiles[i] = new ArrayList<Entity>();
+			entitiesInTiles[i] = new ArrayList<>();
 		}
 		
 		if (level==1) {
@@ -124,7 +119,7 @@ public class Level {
 		screen.setOffset(0, 0);
 	}
 
-	private List<Entity> rowSprites = new ArrayList<Entity>();
+	private final List<Entity> rowSprites = new ArrayList<>();
 
 	public Player player;
 
@@ -160,8 +155,7 @@ public class Level {
 			for (int x = xo - r; x <= w + xo + r; x++) {
 				if (x < 0 || y < 0 || x >= this.w || y >= this.h) continue;
 				List<Entity> entities = entitiesInTiles[x + y * this.w];
-				for (int i = 0; i < entities.size(); i++) {
-					Entity e = entities.get(i);
+				for (Entity e : entities) {
 					// e.render(screen);
 					int lr = e.getLightRadius();
 					if (lr > 0) screen.renderLight(e.x - 1, e.y - 4, lr * 8);
@@ -178,9 +172,9 @@ public class Level {
 	// }
 
 	private void sortAndRender(Screen screen, List<Entity> list) {
-		Collections.sort(list, spriteSorter);
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).render(screen);
+		list.sort(spriteSorter);
+		for (Entity entity : list) {
+			entity.render(screen);
 		}
 	}
 
@@ -289,7 +283,7 @@ public class Level {
 	}
 
 	public List<Entity> getEntities(int x0, int y0, int x1, int y1) {
-		List<Entity> result = new ArrayList<Entity>();
+		List<Entity> result = new ArrayList<>();
 		int xt0 = (x0 >> 4) - 1;
 		int yt0 = (y0 >> 4) - 1;
 		int xt1 = (x1 >> 4) + 1;
@@ -298,8 +292,7 @@ public class Level {
 			for (int x = xt0; x <= xt1; x++) {
 				if (x < 0 || y < 0 || x >= w || y >= h) continue;
 				List<Entity> entities = entitiesInTiles[x + y * this.w];
-				for (int i = 0; i < entities.size(); i++) {
-					Entity e = entities.get(i);
+				for (Entity e : entities) {
 					if (e.intersects(x0, y0, x1, y1)) result.add(e);
 				}
 			}

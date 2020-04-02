@@ -2,8 +2,6 @@ package com.mojang.ld22.entity;
 
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
-import com.mojang.ld22.item.ResourceItem;
-import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.sound.Sound;
 
 public class AirWizard extends Mob {
@@ -134,8 +132,8 @@ public class AirWizard extends Mob {
 			col2 = Color.get(-1, 555, 555, 555);
 		}
 
-		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col1, flip1);
-		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col1, flip1);
+		screen.render(xo + 8 * flip1, yo, xt + yt * 32, col1, flip1);
+		screen.render(xo + 8 - 8 * flip1, yo, xt + 1 + yt * 32, col1, flip1);
 		screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col2, flip2);
 		screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col2, flip2);
 	}

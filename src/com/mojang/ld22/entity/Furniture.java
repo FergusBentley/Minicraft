@@ -8,7 +8,7 @@ public class Furniture extends Entity {
 	private int pushTime = 0;
 	private int pushDir = -1;
 	public int col, sprite;
-	public String name;
+	public final String name;
 	private Player shouldTake;
 
 	public Furniture(String name) {
@@ -36,9 +36,9 @@ public class Furniture extends Entity {
 
 	public void render(Screen screen) {
 		screen.render(x - 8, y - 8 - 4, sprite * 2 + 8 * 32, col, 0);
-		screen.render(x - 0, y - 8 - 4, sprite * 2 + 8 * 32 + 1, col, 0);
-		screen.render(x - 8, y - 0 - 4, sprite * 2 + 8 * 32 + 32, col, 0);
-		screen.render(x - 0, y - 0 - 4, sprite * 2 + 8 * 32 + 33, col, 0);
+		screen.render(x, y - 8 - 4, sprite * 2 + 8 * 32 + 1, col, 0);
+		screen.render(x - 8, y - 4, sprite * 2 + 8 * 32 + 32, col, 0);
+		screen.render(x, y - 4, sprite * 2 + 8 * 32 + 33, col, 0);
 	}
 
 	public boolean blocks(Entity e) {

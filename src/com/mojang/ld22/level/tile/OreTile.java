@@ -16,7 +16,7 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 
 public class OreTile extends Tile {
-	private Resource toDrop;
+	private final Resource toDrop;
 	private int color;
 
 	public OreTile(int id, Resource toDrop) {
@@ -27,9 +27,9 @@ public class OreTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		color = (toDrop.color & 0xffffff00) + Color.get(level.dirtColor);
-		screen.render(x * 16 + 0, y * 16 + 0, 17 + 1 * 32, color, 0);
-		screen.render(x * 16 + 8, y * 16 + 0, 18 + 1 * 32, color, 0);
-		screen.render(x * 16 + 0, y * 16 + 8, 17 + 2 * 32, color, 0);
+		screen.render(x * 16, y * 16, 17 + 32, color, 0);
+		screen.render(x * 16 + 8, y * 16, 18 + 32, color, 0);
+		screen.render(x * 16, y * 16 + 8, 17 + 2 * 32, color, 0);
 		screen.render(x * 16 + 8, y * 16 + 8, 18 + 2 * 32, color, 0);
 	}
 

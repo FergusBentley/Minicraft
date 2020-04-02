@@ -6,10 +6,10 @@ import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
 
 public class ContainerMenu extends Menu {
-	private Player player;
-	private Inventory container;
+	private final Player player;
+	private final Inventory container;
 	private int selected = 0;
-	private String title;
+	private final String title;
 	private int oSelected;
 	private int window = 0;
 

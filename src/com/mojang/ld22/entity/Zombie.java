@@ -7,7 +7,7 @@ import com.mojang.ld22.item.resource.Resource;
 
 public class Zombie extends Mob {
 	private int xa, ya;
-	private int lvl;
+	private final int lvl;
 	private int randomWalkTime = 0;
 
 	public Zombie(int lvl) {
@@ -66,16 +66,16 @@ public class Zombie extends Mob {
 		int xo = x - 8;
 		int yo = y - 11;
 
-		int col = Color.get(-1, 10, 252, 050);
-		if (lvl == 2) col = Color.get(-1, 100, 522, 050);
-		if (lvl == 3) col = Color.get(-1, 111, 444, 050);
-		if (lvl == 4) col = Color.get(-1, 000, 111, 020);
+		int col = Color.get(-1, 10, 252, 50);
+		if (lvl == 2) col = Color.get(-1, 100, 522, 50);
+		if (lvl == 3) col = Color.get(-1, 111, 444, 50);
+		if (lvl == 4) col = Color.get(-1, 0, 111, 20);
 		if (hurtTime > 0) {
 			col = Color.get(-1, 555, 555, 555);
 		}
 
-		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
-		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col, flip1);
+		screen.render(xo + 8 * flip1, yo, xt + yt * 32, col, flip1);
+		screen.render(xo + 8 - 8 * flip1, yo, xt + 1 + yt * 32, col, flip1);
 		screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col, flip2);
 		screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col, flip2);
 	}

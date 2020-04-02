@@ -4,15 +4,15 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import com.mojang.ld22.level.tile.Tile;
 
 public class LevelGen {
 	private static final Random random = new Random();
-	public double[] values;
-	private int w, h;
+	public final double[] values;
+	private final int w;
+	private final int h;
 
 	public LevelGen(int w, int h, int featureSize) {
 		this.w = w;
@@ -72,7 +72,7 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateTopMap(int w, int h) {
-		int attempt = 0;
+
 		do {
 			byte[][] result = createTopMap(w, h);
 
@@ -93,7 +93,7 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateUndergroundMap(int w, int h, int depth) {
-		int attempt = 0;
+
 		do {
 			byte[][] result = createUndergroundMap(w, h, depth);
 
@@ -113,7 +113,7 @@ public class LevelGen {
 	}
 
 	public static byte[][] createAndValidateSkyMap(int w, int h) {
-		int attempt = 0;
+
 		do {
 			byte[][] result = createSkyMap(w, h);
 
@@ -152,7 +152,7 @@ public class LevelGen {
 				double yd = y / (h - 1.0) * 2 - 1;
 				if (xd < 0) xd = -xd;
 				if (yd < 0) yd = -yd;
-				double dist = xd >= yd ? xd : yd;
+				double dist = Math.max(xd, yd);
 				dist = dist * dist * dist * dist;
 				dist = dist * dist * dist * dist;
 				val = val + 1 - dist * 20;
@@ -280,18 +280,18 @@ public class LevelGen {
 				nval = Math.abs(nval - nnoise3.values[i]) * 3 - 2;
 
 				double wval = Math.abs(wnoise1.values[i] - wnoise2.values[i]);
-				wval = Math.abs(nval - wnoise3.values[i]) * 3 - 2;
+				wval = Math.abs(wval - wnoise3.values[i]) * 3 - 2;
 
 				double xd = x / (w - 1.0) * 2 - 1;
 				double yd = y / (h - 1.0) * 2 - 1;
 				if (xd < 0) xd = -xd;
 				if (yd < 0) yd = -yd;
-				double dist = xd >= yd ? xd : yd;
+				double dist = Math.max(xd, yd);
 				dist = dist * dist * dist * dist;
 				dist = dist * dist * dist * dist;
 				val = val + 1 - dist * 20;
 
-				if (val > -2 && wval < -2.0 + (depth) / 2 * 3) {
+				if (val > -2 && wval < -2.0 + (depth) / 2f * 3) {
 					if (depth > 2)
 						map[i] = Tile.lava.id;
 					else
@@ -357,7 +357,7 @@ public class LevelGen {
 				double yd = y / (h - 1.0) * 2 - 1;
 				if (xd < 0) xd = -xd;
 				if (yd < 0) yd = -yd;
-				double dist = xd >= yd ? xd : yd;
+				double dist = Math.max(xd, yd);
 				dist = dist * dist * dist * dist;
 				dist = dist * dist * dist * dist;
 				val = -val * 1 - 2.2;
@@ -403,12 +403,14 @@ public class LevelGen {
 
 	public static void main(String[] args) {
 		int d = 0;
-		while (true) {
-			int w = 128;
-			int h = 128;
+		boolean another = true;
+		while (another) {
+			d++;
+			int w = 256;
+			int h = 256;
 
 			byte[] map = LevelGen.createAndValidateTopMap(w, h)[0];
-			// byte[] map = LevelGen.createAndValidateUndergroundMap(w, h, (d++ % 3) + 1)[0];
+			// byte[] map = LevelGen.createAndValidateUndergroundMap(w, h, (d % 3) + 1)[0];
 			// byte[] map = LevelGen.createAndValidateSkyMap(w, h)[0];
 
 			BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
@@ -431,7 +433,9 @@ public class LevelGen {
 				}
 			}
 			img.setRGB(0, 0, w, h, pixels, 0, w);
-			JOptionPane.showMessageDialog(null, null, "Another", JOptionPane.YES_NO_OPTION, new ImageIcon(img.getScaledInstance(w * 4, h * 4, Image.SCALE_AREA_AVERAGING)));
+			Icon icon = new ImageIcon(img.getScaledInstance(w * 2, h * 2, Image.SCALE_AREA_AVERAGING));
+			int res = JOptionPane.showOptionDialog(null, d, "Another", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, icon, null, null);
+			another = res == JOptionPane.YES_OPTION;
 		}
 	}
 }

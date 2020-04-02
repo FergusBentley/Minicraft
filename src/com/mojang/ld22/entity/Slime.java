@@ -8,7 +8,7 @@ import com.mojang.ld22.item.resource.Resource;
 public class Slime extends Mob {
 	private int xa, ya;
 	private int jumpTime = 0;
-	private int lvl;
+	private final int lvl;
 
 	public Slime(int lvl) {
 		this.lvl = lvl;
@@ -77,15 +77,15 @@ public class Slime extends Mob {
 		int col = Color.get(-1, 10, 252, 555);
 		if (lvl == 2) col = Color.get(-1, 100, 522, 555);
 		if (lvl == 3) col = Color.get(-1, 111, 444, 555);
-		if (lvl == 4) col = Color.get(-1, 000, 111, 224);
+		if (lvl == 4) col = Color.get(-1, 0, 111, 224);
 
 		if (hurtTime > 0) {
 			col = Color.get(-1, 555, 555, 555);
 		}
 
-		screen.render(xo + 0, yo + 0, xt + yt * 32, col, 0);
-		screen.render(xo + 8, yo + 0, xt + 1 + yt * 32, col, 0);
-		screen.render(xo + 0, yo + 8, xt + (yt + 1) * 32, col, 0);
+		screen.render(xo, yo, xt + yt * 32, col, 0);
+		screen.render(xo + 8, yo, xt + 1 + yt * 32, col, 0);
+		screen.render(xo, yo + 8, xt + (yt + 1) * 32, col, 0);
 		screen.render(xo + 8, yo + 8, xt + 1 + (yt + 1) * 32, col, 0);
 	}
 

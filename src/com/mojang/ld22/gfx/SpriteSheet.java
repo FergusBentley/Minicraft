@@ -3,8 +3,9 @@ package com.mojang.ld22.gfx;
 import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
-	public int width, height;
-	public int[] pixels;
+	public final int width;
+    public final int height;
+	public final int[] pixels;
 
 	public SpriteSheet(BufferedImage image) {
 		width = image.getWidth();

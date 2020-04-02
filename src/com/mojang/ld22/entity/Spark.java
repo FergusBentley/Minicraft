@@ -6,11 +6,12 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 
 public class Spark extends Entity {
-	private int lifeTime;
-	public double xa, ya;
+	private final int lifeTime;
+	public final double xa;
+	public final double ya;
 	public double xx, yy;
 	private int time;
-	private AirWizard owner;
+	private final AirWizard owner;
 
 	public Spark(AirWizard owner, double xa, double ya) {
 		this.owner = owner;
@@ -36,8 +37,7 @@ public class Spark extends Entity {
 		x = (int) xx;
 		y = (int) yy;
 		List<Entity> toHit = level.getEntities(x, y, x, y);
-		for (int i = 0; i < toHit.size(); i++) {
-			Entity e = toHit.get(i);
+		for (Entity e : toHit) {
 			if (e instanceof Mob && !(e instanceof AirWizard)) {
 				e.hurt(owner, 1, ((Mob) e).dir ^ 1);
 			}
@@ -57,6 +57,6 @@ public class Spark extends Entity {
 		int yt = 13;
 
 		screen.render(x - 4, y - 4 - 2, xt + yt * 32, Color.get(-1, 555, 555, 555), random.nextInt(4));
-		screen.render(x - 4, y - 4 + 2, xt + yt * 32, Color.get(-1, 000, 000, 000), random.nextInt(4));
+		screen.render(x - 4, y - 4 + 2, xt + yt * 32, Color.get(-1, 0, 0, 0), random.nextInt(4));
 	}
 }

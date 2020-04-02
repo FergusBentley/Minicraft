@@ -8,8 +8,8 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class PlantableResource extends Resource {
-	private List<Tile> sourceTiles;
-	private Tile targetTile;
+	private final List<Tile> sourceTiles;
+	private final Tile targetTile;
 
 	public PlantableResource(String name, int sprite, int color, Tile targetTile, Tile... sourceTiles1) {
 		this(name, sprite, color, targetTile, Arrays.asList(sourceTiles1));

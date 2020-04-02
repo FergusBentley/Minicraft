@@ -6,14 +6,12 @@ import com.mojang.ld22.item.Item;
 import com.mojang.ld22.sound.Sound;
 
 public class ItemEntity extends Entity {
-	private int lifeTime;
-	protected int walkDist = 0;
+	private final int lifeTime;
 	protected int dir = 0;
 	public int hurtTime = 0;
-	protected int xKnockback, yKnockback;
 	public double xa, ya, za;
 	public double xx, yy, zz;
-	public Item item;
+	public final Item item;
 	private int time = 0;
 
 	public ItemEntity(Item item, int x, int y) {

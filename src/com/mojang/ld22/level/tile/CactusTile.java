@@ -19,9 +19,9 @@ public class CactusTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(20, 40, 50, level.sandColor);
-		screen.render(x * 16 + 0, y * 16 + 0, 8 + 2 * 32, col, 0);
-		screen.render(x * 16 + 8, y * 16 + 0, 9 + 2 * 32, col, 0);
-		screen.render(x * 16 + 0, y * 16 + 8, 8 + 3 * 32, col, 0);
+		screen.render(x * 16, y * 16, 8 + 2 * 32, col, 0);
+		screen.render(x * 16 + 8, y * 16, 9 + 2 * 32, col, 0);
+		screen.render(x * 16, y * 16 + 8, 8 + 3 * 32, col, 0);
 		screen.render(x * 16 + 8, y * 16 + 8, 9 + 3 * 32, col, 0);
 	}
 

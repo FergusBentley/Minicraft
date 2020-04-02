@@ -8,7 +8,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -28,20 +27,19 @@ import com.mojang.ld22.screen.WonMenu;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
-	private Random random = new Random();
 	public static final String NAME = "Minicraft";
 	public static final int HEIGHT = 120;
 	public static final int WIDTH = 160;
 	private static final int SCALE = 3;
 
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	private final BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	private boolean running = false;
 	private Screen screen;
 	private Screen lightScreen;
-	private InputHandler input = new InputHandler(this);
+	private final InputHandler input = new InputHandler(this);
 
-	private int[] colors = new int[256];
+	private final int[] colors = new int[256];
 	private int tickCount = 0;
 	public int gameTime = 0;
 
@@ -106,9 +104,9 @@ public class Game extends Canvas implements Runnable {
 					int bb = (b * 255 / 5);
 					int mid = (rr * 30 + gg * 59 + bb * 11) / 100;
 
-					int r1 = ((rr + mid * 1) / 2) * 230 / 255 + 10;
-					int g1 = ((gg + mid * 1) / 2) * 230 / 255 + 10;
-					int b1 = ((bb + mid * 1) / 2) * 230 / 255 + 10;
+					int r1 = ((rr + mid) / 2) * 230 / 255 + 10;
+					int g1 = ((gg + mid) / 2) * 230 / 255 + 10;
+					int b1 = ((bb + mid) / 2) * 230 / 255 + 10;
 					colors[pp++] = r1 << 16 | g1 << 8 | b1;
 
 				}
@@ -129,9 +127,7 @@ public class Game extends Canvas implements Runnable {
 		long lastTime = System.nanoTime();
 		double unprocessed = 0;
 		double nsPerTick = 1000000000.0 / 60;
-		int frames = 0;
-		int ticks = 0;
-		long lastTimer1 = System.currentTimeMillis();
+		long lastTimer = System.currentTimeMillis();
 
 		init();
 
@@ -139,12 +135,10 @@ public class Game extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			unprocessed += (now - lastTime) / nsPerTick;
 			lastTime = now;
-			boolean shouldRender = true;
+
 			while (unprocessed >= 1) {
-				ticks++;
 				tick();
 				unprocessed -= 1;
-				shouldRender = true;
 			}
 
 			try {
@@ -153,16 +147,10 @@ public class Game extends Canvas implements Runnable {
 				e.printStackTrace();
 			}
 
-			if (shouldRender) {
-				frames++;
-				render();
-			}
+			render();
 
-			if (System.currentTimeMillis() - lastTimer1 > 1000) {
-				lastTimer1 += 1000;
-				System.out.println(ticks + " ticks, " + frames + " fps");
-				frames = 0;
-				ticks = 0;
+			if (System.currentTimeMillis() - lastTimer > 1000) {
+				lastTimer += 1000;
 			}
 		}
 	}
@@ -267,26 +255,26 @@ public class Game extends Canvas implements Runnable {
 	private void renderGui() {
 		for (int y = 0; y < 2; y++) {
 			for (int x = 0; x < 20; x++) {
-				screen.render(x * 8, screen.h - 16 + y * 8, 0 + 12 * 32, Color.get(000, 000, 000, 000), 0);
+				screen.render(x * 8, screen.h - 16 + y * 8, 12 * 32, Color.get(0, 0, 0, 0), 0);
 			}
 		}
 
 		for (int i = 0; i < 10; i++) {
 			if (i < player.health)
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
+				screen.render(i * 8, screen.h - 16, 12 * 32, Color.get(0, 200, 500, 533), 0);
 			else
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
+				screen.render(i * 8, screen.h - 16, 12 * 32, Color.get(0, 100, 0, 0), 0);
 
 			if (player.staminaRechargeDelay > 0) {
 				if (player.staminaRechargeDelay / 4 % 2 == 0)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 555, 000, 000), 0);
+					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 555, 0, 0), 0);
 				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
 			} else {
 				if (i < player.stamina)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 220, 550, 553), 0);
+					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 220, 550, 553), 0);
 				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
 			}
 		}
 		if (player.activeItem != null) {
@@ -305,10 +293,10 @@ public class Game extends Canvas implements Runnable {
 		int w = msg.length();
 		int h = 1;
 
-		screen.render(xx - 8, yy - 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 0);
-		screen.render(xx + w * 8, yy - 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 1);
-		screen.render(xx - 8, yy + 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 2);
-		screen.render(xx + w * 8, yy + 8, 0 + 13 * 32, Color.get(-1, 1, 5, 445), 3);
+		screen.render(xx - 8, yy - 8, 13 * 32, Color.get(-1, 1, 5, 445), 0);
+		screen.render(xx + w * 8, yy - 8, 13 * 32, Color.get(-1, 1, 5, 445), 1);
+		screen.render(xx - 8, yy + 8, 13 * 32, Color.get(-1, 1, 5, 445), 2);
+		screen.render(xx + w * 8, yy + 8, 13 * 32, Color.get(-1, 1, 5, 445), 3);
 		for (int x = 0; x < w; x++) {
 			screen.render(xx + x * 8, yy - 8, 1 + 13 * 32, Color.get(-1, 1, 5, 445), 0);
 			screen.render(xx + x * 8, yy + 8, 1 + 13 * 32, Color.get(-1, 1, 5, 445), 2);

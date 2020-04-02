@@ -28,19 +28,19 @@ public class GrassTile extends Tile {
 		boolean r = !level.getTile(x + 1, y).connectsToGrass;
 
 		if (!u && !l) {
-			screen.render(x * 16 + 0, y * 16 + 0, 0, col, 0);
+			screen.render(x * 16, y * 16, 0, col, 0);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 0, (l ? 11 : 12) + (u ? 0 : 1) * 32, transitionColor, 0);
+			screen.render(x * 16, y * 16, (l ? 11 : 12) + (u ? 0 : 1) * 32, transitionColor, 0);
 
 		if (!u && !r) {
-			screen.render(x * 16 + 8, y * 16 + 0, 1, col, 0);
+			screen.render(x * 16 + 8, y * 16, 1, col, 0);
 		} else
-			screen.render(x * 16 + 8, y * 16 + 0, (r ? 13 : 12) + (u ? 0 : 1) * 32, transitionColor, 0);
+			screen.render(x * 16 + 8, y * 16, (r ? 13 : 12) + (u ? 0 : 1) * 32, transitionColor, 0);
 
 		if (!d && !l) {
-			screen.render(x * 16 + 0, y * 16 + 8, 2, col, 0);
+			screen.render(x * 16, y * 16 + 8, 2, col, 0);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 8, (l ? 11 : 12) + (d ? 2 : 1) * 32, transitionColor, 0);
+			screen.render(x * 16, y * 16 + 8, (l ? 11 : 12) + (d ? 2 : 1) * 32, transitionColor, 0);
 		if (!d && !r) {
 			screen.render(x * 16 + 8, y * 16 + 8, 3, col, 0);
 		} else

@@ -6,8 +6,8 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.level.Level;
 
 public class SaplingTile extends Tile {
-	private Tile onType;
-	private Tile growsTo;
+	private final Tile onType;
+	private final Tile growsTo;
 
 	public SaplingTile(int id, Tile onType, Tile growsTo) {
 		super(id);

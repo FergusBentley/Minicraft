@@ -14,13 +14,13 @@ public class WaterTile extends Tile {
 		connectsToWater = true;
 	}
 
-	private Random wRandom = new Random();
+	private final Random wRandom = new Random();
 
 	public void render(Screen screen, Level level, int x, int y) {
-		wRandom.setSeed((tickCount + (x / 2 - y) * 4311) / 10 * 54687121l + x * 3271612l + y * 3412987161l);
-		int col = Color.get(005, 005, 115, 115);
-		int transitionColor1 = Color.get(3, 005, level.dirtColor - 111, level.dirtColor);
-		int transitionColor2 = Color.get(3, 005, level.sandColor - 110, level.sandColor);
+		wRandom.setSeed((tickCount + (x / 2 - y) * 4311) / 10 * 54687121L + x * 3271612L + y * 3412987161L);
+		int col = Color.get(5, 5, 115, 115);
+		int transitionColor1 = Color.get(3, 5, level.dirtColor - 111, level.dirtColor);
+		int transitionColor2 = Color.get(3, 5, level.sandColor - 110, level.sandColor);
 
 		boolean u = !level.getTile(x, y - 1).connectsToWater;
 		boolean d = !level.getTile(x, y + 1).connectsToWater;
@@ -33,19 +33,19 @@ public class WaterTile extends Tile {
 		boolean sr = r && level.getTile(x + 1, y).connectsToSand;
 
 		if (!u && !l) {
-			screen.render(x * 16 + 0, y * 16 + 0, wRandom.nextInt(4), col, wRandom.nextInt(4));
+			screen.render(x * 16, y * 16, wRandom.nextInt(4), col, wRandom.nextInt(4));
 		} else
-			screen.render(x * 16 + 0, y * 16 + 0, (l ? 14 : 15) + (u ? 0 : 1) * 32, (su || sl) ? transitionColor2 : transitionColor1, 0);
+			screen.render(x * 16, y * 16, (l ? 14 : 15) + (u ? 0 : 1) * 32, (su || sl) ? transitionColor2 : transitionColor1, 0);
 
 		if (!u && !r) {
-			screen.render(x * 16 + 8, y * 16 + 0, wRandom.nextInt(4), col, wRandom.nextInt(4));
+			screen.render(x * 16 + 8, y * 16, wRandom.nextInt(4), col, wRandom.nextInt(4));
 		} else
-			screen.render(x * 16 + 8, y * 16 + 0, (r ? 16 : 15) + (u ? 0 : 1) * 32, (su || sr) ? transitionColor2 : transitionColor1, 0);
+			screen.render(x * 16 + 8, y * 16, (r ? 16 : 15) + (u ? 0 : 1) * 32, (su || sr) ? transitionColor2 : transitionColor1, 0);
 
 		if (!d && !l) {
-			screen.render(x * 16 + 0, y * 16 + 8, wRandom.nextInt(4), col, wRandom.nextInt(4));
+			screen.render(x * 16, y * 16 + 8, wRandom.nextInt(4), col, wRandom.nextInt(4));
 		} else
-			screen.render(x * 16 + 0, y * 16 + 8, (l ? 14 : 15) + (d ? 2 : 1) * 32, (sd || sl) ? transitionColor2 : transitionColor1, 0);
+			screen.render(x * 16, y * 16 + 8, (l ? 14 : 15) + (d ? 2 : 1) * 32, (sd || sl) ? transitionColor2 : transitionColor1, 0);
 		if (!d && !r) {
 			screen.render(x * 16 + 8, y * 16 + 8, wRandom.nextInt(4), col, wRandom.nextInt(4));
 		} else

@@ -6,8 +6,8 @@ import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
 
 public class TextParticle extends Entity {
-	private String msg;
-	private int col;
+	private final String msg;
+	private final int col;
 	private int time = 0;
 	public double xa, ya, za;
 	public double xx, yy, zz;

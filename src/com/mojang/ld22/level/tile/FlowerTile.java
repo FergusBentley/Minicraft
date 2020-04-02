@@ -26,10 +26,10 @@ public class FlowerTile extends GrassTile {
 		int shape = (data / 16) % 2;
 		int flowerCol = Color.get(10, level.grassColor, 555, 440);
 
-		if (shape == 0) screen.render(x * 16 + 0, y * 16 + 0, 1 + 1 * 32, flowerCol, 0);
-		if (shape == 1) screen.render(x * 16 + 8, y * 16 + 0, 1 + 1 * 32, flowerCol, 0);
-		if (shape == 1) screen.render(x * 16 + 0, y * 16 + 8, 1 + 1 * 32, flowerCol, 0);
-		if (shape == 0) screen.render(x * 16 + 8, y * 16 + 8, 1 + 1 * 32, flowerCol, 0);
+		if (shape == 0) screen.render(x * 16, y * 16, 1 + 32, flowerCol, 0);
+		if (shape == 1) screen.render(x * 16 + 8, y * 16, 1 + 32, flowerCol, 0);
+		if (shape == 1) screen.render(x * 16, y * 16 + 8, 1 + 32, flowerCol, 0);
+		if (shape == 0) screen.render(x * 16 + 8, y * 16 + 8, 1 + 32, flowerCol, 0);
 	}
 
 	public boolean interact(Level level, int x, int y, Player player, Item item, int attackDir) {

@@ -10,7 +10,7 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class ResourceItem extends Item {
-	public Resource resource;
+	public final Resource resource;
 	public int count = 1;
 
 	public ResourceItem(Resource resource) {

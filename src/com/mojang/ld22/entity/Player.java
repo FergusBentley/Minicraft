@@ -10,28 +10,24 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.FurnitureItem;
 import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.PowerGloveItem;
-import com.mojang.ld22.item.ResourceItem;
-import com.mojang.ld22.item.ToolItem;
-import com.mojang.ld22.item.ToolType;
-import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 import com.mojang.ld22.screen.InventoryMenu;
 import com.mojang.ld22.sound.Sound;
 
 public class Player extends Mob {
-	private InputHandler input;
+	private final InputHandler input;
 	private int attackTime, attackDir;
 
-	public Game game;
-	public Inventory inventory = new Inventory();
+	public final Game game;
+	public final Inventory inventory = new Inventory();
 	public Item attackItem;
 	public Item activeItem;
 	public int stamina;
 	public int staminaRecharge;
 	public int staminaRechargeDelay;
 	public int score;
-	public int maxStamina = 10;
+	public final int maxStamina = 10;
 	private int onStairDelay;
 	public int invulnerableTime = 0;
 
@@ -100,9 +96,7 @@ public class Player extends Mob {
 		}
 
 		if (input.attack.clicked) {
-			if (stamina == 0) {
-
-			} else {
+			if (stamina != 0) {
 				stamina--;
 				staminaRecharge = 0;
 				attack();
@@ -133,7 +127,7 @@ public class Player extends Mob {
 		if (attackDir == 3) xt = (x + r) >> 4;
 
 		if (xt >= 0 && yt >= 0 && xt < level.w && yt < level.h) {
-			if (level.getTile(xt, yt).use(level, xt, yt, this, attackDir)) return true;
+			return level.getTile(xt, yt).use(level, xt, yt, this, attackDir);
 		}
 
 		return false;
@@ -205,8 +199,7 @@ public class Player extends Mob {
 
 	private boolean use(int x0, int y0, int x1, int y1) {
 		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			if (e != this) if (e.use(this, attackDir)) return true;
 		}
 		return false;
@@ -214,8 +207,7 @@ public class Player extends Mob {
 
 	private boolean interact(int x0, int y0, int x1, int y1) {
 		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			if (e != this) if (e.interact(this, activeItem, attackDir)) return true;
 		}
 		return false;
@@ -223,8 +215,7 @@ public class Player extends Mob {
 
 	private void hurt(int x0, int y0, int x1, int y1) {
 		List<Entity> entities = level.getEntities(x0, y0, x1, y1);
-		for (int i = 0; i < entities.size(); i++) {
-			Entity e = entities.get(i);
+		for (Entity e : entities) {
 			if (e != this) e.hurt(this, getAttackDamage(e), attackDir);
 		}
 	}
@@ -264,12 +255,12 @@ public class Player extends Mob {
 			if (tickTime / 8 % 2 == 0) {
 				waterColor = Color.get(-1, 335, 5, 115);
 			}
-			screen.render(xo + 0, yo + 3, 5 + 13 * 32, waterColor, 0);
+			screen.render(xo, yo + 3, 5 + 13 * 32, waterColor, 0);
 			screen.render(xo + 8, yo + 3, 5 + 13 * 32, waterColor, 1);
 		}
 
 		if (attackTime > 0 && attackDir == 1) {
-			screen.render(xo + 0, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
+			screen.render(xo, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 0);
 			screen.render(xo + 8, yo - 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 1);
 			if (attackItem != null) {
 				attackItem.renderIcon(screen, xo + 4, yo - 4);
@@ -283,8 +274,8 @@ public class Player extends Mob {
 		if (activeItem instanceof FurnitureItem) {
 			yt += 2;
 		}
-		screen.render(xo + 8 * flip1, yo + 0, xt + yt * 32, col, flip1);
-		screen.render(xo + 8 - 8 * flip1, yo + 0, xt + 1 + yt * 32, col, flip1);
+		screen.render(xo + 8 * flip1, yo, xt + yt * 32, col, flip1);
+		screen.render(xo + 8 - 8 * flip1, yo, xt + 1 + yt * 32, col, flip1);
 		if (!isSwimming()) {
 			screen.render(xo + 8 * flip2, yo + 8, xt + (yt + 1) * 32, col, flip2);
 			screen.render(xo + 8 - 8 * flip2, yo + 8, xt + 1 + (yt + 1) * 32, col, flip2);
@@ -305,7 +296,7 @@ public class Player extends Mob {
 			}
 		}
 		if (attackTime > 0 && attackDir == 0) {
-			screen.render(xo + 0, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
+			screen.render(xo, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 2);
 			screen.render(xo + 8, yo + 8 + 4, 6 + 13 * 32, Color.get(-1, 555, 555, 555), 3);
 			if (attackItem != null) {
 				attackItem.renderIcon(screen, xo + 4, yo + 8 + 4);

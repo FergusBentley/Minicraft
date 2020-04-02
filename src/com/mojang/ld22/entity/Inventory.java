@@ -8,7 +8,7 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 
 public class Inventory {
-	public List<Item> items = new ArrayList<Item>();
+	public final List<Item> items = new ArrayList<>();
 
 	public void add(Item item) {
 		add(items.size(), item);
@@ -29,9 +29,9 @@ public class Inventory {
 	}
 
 	private ResourceItem findResource(Resource resource) {
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) instanceof ResourceItem) {
-				ResourceItem has = (ResourceItem) items.get(i);
+		for (Item item : items) {
+			if (item instanceof ResourceItem) {
+				ResourceItem has = (ResourceItem) item;
 				if (has.resource == resource) return has;
 			}
 		}
@@ -44,13 +44,12 @@ public class Inventory {
 		return ri.count >= count;
 	}
 
-	public boolean removeResource(Resource r, int count) {
+	public void removeResource(Resource r, int count) {
 		ResourceItem ri = findResource(r);
-		if (ri == null) return false;
-		if (ri.count < count) return false;
+		if (ri == null) return;
+		if (ri.count < count) return;
 		ri.count -= count;
 		if (ri.count <= 0) items.remove(ri);
-		return true;
 	}
 
 	public int count(Item item) {
@@ -59,8 +58,8 @@ public class Inventory {
 			if (ri!=null) return ri.count;
 		} else {
 			int count = 0;
-			for (int i=0; i<items.size(); i++) {
-				if (items.get(i).matches(item)) count++;
+			for (Item value : items) {
+				if (value.matches(item)) count++;
 			}
 			return count;
 		}

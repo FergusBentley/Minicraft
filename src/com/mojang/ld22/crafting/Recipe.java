@@ -13,13 +13,15 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.screen.ListItem;
 
 public abstract class Recipe implements ListItem {
-	public List<Item> costs = new ArrayList<Item>();
+	public final List<Item> costs = new ArrayList<>();
 	public boolean canCraft = false;
-	public Item resultTemplate;
+	public final Item resultTemplate;
 
 	public Recipe(Item resultTemplate) {
 		this.resultTemplate = resultTemplate;
 	}
+
+	public abstract void craft(Player player);
 
 	public Recipe addCost(Resource resource, int count) {
 		costs.add(new ResourceItem(resource, count));
@@ -27,8 +29,7 @@ public abstract class Recipe implements ListItem {
 	}
 
 	public void checkCanCraft(Player player) {
-		for (int i = 0; i < costs.size(); i++) {
-			Item item = costs.get(i);
+		for (Item item : costs) {
 			if (item instanceof ResourceItem) {
 				ResourceItem ri = (ResourceItem) item;
 				if (!player.inventory.hasResources(ri.resource, ri.count)) {
@@ -46,11 +47,8 @@ public abstract class Recipe implements ListItem {
 		Font.draw(resultTemplate.getName(), screen, x + 8, y, textColor);
 	}
 
-	public abstract void craft(Player player);
-
 	public void deductCost(Player player) {
-		for (int i = 0; i < costs.size(); i++) {
-			Item item = costs.get(i);
+		for (Item item : costs) {
 			if (item instanceof ResourceItem) {
 				ResourceItem ri = (ResourceItem) item;
 				player.inventory.removeResource(ri.resource, ri.count);

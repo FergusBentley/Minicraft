@@ -17,7 +17,6 @@ public class InfiniteFallTile extends Tile {
 	}
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
-		if (e instanceof AirWizard) return true;
-		return false;
+		return e instanceof AirWizard;
 	}
 }

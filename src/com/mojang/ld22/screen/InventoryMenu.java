@@ -6,7 +6,7 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.Item;
 
 public class InventoryMenu extends Menu {
-	private Player player;
+	private final Player player;
 	private int selected = 0;
 
 	public InventoryMenu(Player player) {
@@ -30,8 +30,7 @@ public class InventoryMenu extends Menu {
 		if (selected >= len) selected -= len;
 
 		if (input.attack.clicked && len > 0) {
-			Item item = player.inventory.items.remove(selected);
-			player.activeItem = item;
+			player.activeItem = player.inventory.items.remove(selected);
 			game.setMenu(null);
 		}
 	}

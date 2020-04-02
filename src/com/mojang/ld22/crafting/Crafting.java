@@ -13,10 +13,10 @@ import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
 
 public class Crafting {
-	public static final List<Recipe> anvilRecipes = new ArrayList<Recipe>();
-	public static final List<Recipe> ovenRecipes = new ArrayList<Recipe>();
-	public static final List<Recipe> furnaceRecipes = new ArrayList<Recipe>();
-	public static final List<Recipe> workbenchRecipes = new ArrayList<Recipe>();
+	public static final List<Recipe> anvilRecipes = new ArrayList<>();
+	public static final List<Recipe> ovenRecipes = new ArrayList<>();
+	public static final List<Recipe> furnaceRecipes = new ArrayList<>();
+	public static final List<Recipe> workbenchRecipes = new ArrayList<>();
 
 	static {
 		try {

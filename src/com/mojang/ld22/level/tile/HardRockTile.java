@@ -22,7 +22,7 @@ public class HardRockTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(334, 334, 223, 223);
-		int transitionColor = Color.get(001, 334, 445, level.dirtColor);
+		int transitionColor = Color.get(1, 334, 445, level.dirtColor);
 
 		boolean u = level.getTile(x, y - 1) != this;
 		boolean d = level.getTile(x, y + 1) != this;
@@ -36,32 +36,32 @@ public class HardRockTile extends Tile {
 
 		if (!u && !l) {
 			if (!ul)
-				screen.render(x * 16 + 0, y * 16 + 0, 0, col, 0);
+				screen.render(x * 16, y * 16, 0, col, 0);
 			else
-				screen.render(x * 16 + 0, y * 16 + 0, 7 + 0 * 32, transitionColor, 3);
+				screen.render(x * 16, y * 16, 7, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 0, (l ? 6 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+			screen.render(x * 16, y * 16, (l ? 6 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
 
 		if (!u && !r) {
 			if (!ur)
-				screen.render(x * 16 + 8, y * 16 + 0, 1, col, 0);
+				screen.render(x * 16 + 8, y * 16, 1, col, 0);
 			else
-				screen.render(x * 16 + 8, y * 16 + 0, 8 + 0 * 32, transitionColor, 3);
+				screen.render(x * 16 + 8, y * 16, 8, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 8, y * 16 + 0, (r ? 4 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
+			screen.render(x * 16 + 8, y * 16, (r ? 4 : 5) + (u ? 2 : 1) * 32, transitionColor, 3);
 
 		if (!d && !l) {
 			if (!dl)
-				screen.render(x * 16 + 0, y * 16 + 8, 2, col, 0);
+				screen.render(x * 16, y * 16 + 8, 2, col, 0);
 			else
-				screen.render(x * 16 + 0, y * 16 + 8, 7 + 1 * 32, transitionColor, 3);
+				screen.render(x * 16, y * 16 + 8, 7 + 32, transitionColor, 3);
 		} else
-			screen.render(x * 16 + 0, y * 16 + 8, (l ? 6 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
+			screen.render(x * 16, y * 16 + 8, (l ? 6 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
 		if (!d && !r) {
 			if (!dr)
 				screen.render(x * 16 + 8, y * 16 + 8, 3, col, 0);
 			else
-				screen.render(x * 16 + 8, y * 16 + 8, 8 + 1 * 32, transitionColor, 3);
+				screen.render(x * 16 + 8, y * 16 + 8, 8 + 32, transitionColor, 3);
 		} else
 			screen.render(x * 16 + 8, y * 16 + 8, (r ? 4 : 5) + (d ? 0 : 1) * 32, transitionColor, 3);
 	}

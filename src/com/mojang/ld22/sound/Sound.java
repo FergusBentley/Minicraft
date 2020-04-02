@@ -1,7 +1,7 @@
 package com.mojang.ld22.sound;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
+import javax.sound.sampled.*;
+import java.io.IOException;
 
 public class Sound {
 	public static final Sound playerHurt = new Sound("/playerhurt.wav");
@@ -12,23 +12,24 @@ public class Sound {
 	public static final Sound bossdeath = new Sound("/bossdeath.wav");
 	public static final Sound craft = new Sound("/craft.wav");
 
-	private AudioClip clip;
+	private final String name;
 
 	private Sound(String name) {
-		try {
-			clip = Applet.newAudioClip(Sound.class.getResource(name));
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		this.name = name;
 	}
 
 	public void play() {
 		try {
-			new Thread() {
-				public void run() {
-					clip.play();
+			new Thread(() -> {
+				try {
+					Clip clip = AudioSystem.getClip();
+					AudioInputStream stream = AudioSystem.getAudioInputStream(Sound.class.getResource(name));
+					clip.open(stream);
+					clip.start();
+				} catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+					e.printStackTrace();
 				}
-			}.start();
+			}).start();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

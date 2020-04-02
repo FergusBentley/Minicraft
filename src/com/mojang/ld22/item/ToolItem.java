@@ -9,9 +9,8 @@ import com.mojang.ld22.gfx.Font;
 import com.mojang.ld22.gfx.Screen;
 
 public class ToolItem extends Item {
-	private Random random = new Random();
+	private final Random random = new Random();
 
-	public static final int MAX_LEVEL = 5;
 	public static final String[] LEVEL_NAMES = { //
 	"Wood", "Rock", "Iron", "Gold", "Gem"//
 	};
@@ -21,11 +20,11 @@ public class ToolItem extends Item {
 			Color.get(-1, 100, 321, 111),//
 			Color.get(-1, 100, 321, 555),//
 			Color.get(-1, 100, 321, 550),//
-			Color.get(-1, 100, 321, 055),//
+			Color.get(-1, 100, 321,  55),//
 	};
 
-	public ToolType type;
-	public int level = 0;
+	public final ToolType type;
+	public final int level;
 
 	public ToolItem(ToolType type, int level) {
 		this.type = type;
@@ -71,12 +70,8 @@ public class ToolItem extends Item {
 	}
 
 	public boolean matches(Item item) {
-		if (item instanceof ToolItem) {
-			ToolItem other = (ToolItem) item;
-			if (other.type != type) return false;
-			if (other.level != level) return false;
-			return true;
-		}
-		return false;
+		if (!(item instanceof ToolItem)) return false;
+		ToolItem other = (ToolItem) item;
+		return other.type == type && other.level == level;
 	}
 }

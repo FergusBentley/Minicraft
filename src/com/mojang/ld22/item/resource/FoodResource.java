@@ -5,8 +5,8 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class FoodResource extends Resource {
-	private int heal;
-	private int staminaCost;
+	private final int heal;
+	private final int staminaCost;
 
 	public FoodResource(String name, int sprite, int color, int heal, int staminaCost) {
 		super(name, sprite, color);

@@ -37,7 +37,7 @@ public class TitleMenu extends Menu {
 
 		int h = 2;
 		int w = 13;
-		int titleColor = Color.get(0, 010, 131, 551);
+		int titleColor = Color.get(0, 10, 131, 551);
 		int xo = (screen.w - w * 8) / 2;
 		int yo = 24;
 		for (int y = 0; y < h; y++) {

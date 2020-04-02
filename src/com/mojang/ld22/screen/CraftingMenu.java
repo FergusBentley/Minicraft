@@ -1,8 +1,6 @@
 package com.mojang.ld22.screen;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.mojang.ld22.crafting.Recipe;
@@ -15,25 +13,23 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.sound.Sound;
 
 public class CraftingMenu extends Menu {
-	private Player player;
+	private final Player player;
 	private int selected = 0;
 
-	private List<Recipe> recipes;
+	private final List<Recipe> recipes;
 
 	public CraftingMenu(List<Recipe> recipes, Player player) {
-		this.recipes = new ArrayList<Recipe>(recipes);
+		this.recipes = new ArrayList<>(recipes);
 		this.player = player;
 
 		for (int i = 0; i < recipes.size(); i++) {
 			this.recipes.get(i).checkCanCraft(player);
 		}
 
-		Collections.sort(this.recipes, new Comparator<Recipe>() {
-			public int compare(Recipe r1, Recipe r2) {
-				if (r1.canCraft && !r2.canCraft) return -1;
-				if (!r1.canCraft && r2.canCraft) return 1;
-				return 0;
-			}
+		this.recipes.sort((r1, r2) -> {
+			if (r1.canCraft && !r2.canCraft) return -1;
+			if (!r1.canCraft && r2.canCraft) return 1;
+			return 0;
 		});
 	}
 
@@ -56,9 +52,9 @@ public class CraftingMenu extends Menu {
 				r.craft(player);
 				Sound.craft.play();
 			}
-			for (int i = 0; i < recipes.size(); i++) {
-				recipes.get(i).checkCanCraft(player);
-			}
+            for (Recipe recipe : recipes) {
+                recipe.checkCanCraft(player);
+            }
 		}
 	}
 

@@ -4,7 +4,7 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.screen.ContainerMenu;
 
 public class Chest extends Furniture {
-	public Inventory inventory = new Inventory();
+	public final Inventory inventory = new Inventory();
 
 	public Chest() {
 		super("Chest");

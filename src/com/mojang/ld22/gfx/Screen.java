@@ -1,5 +1,7 @@
 package com.mojang.ld22.gfx;
 
+import java.util.Arrays;
+
 public class Screen {
 	/*
 	 * public static final int MAP_WIDTH = 64; // Must be 2^x public static final int MAP_WIDTH_MASK = MAP_WIDTH - 1;
@@ -13,9 +15,9 @@ public class Screen {
 	public static final int BIT_MIRROR_Y = 0x02;
 
 	public final int w, h;
-	public int[] pixels;
+	public final int[] pixels;
 
-	private SpriteSheet sheet;
+	private final SpriteSheet sheet;
 
 	public Screen(int w, int h, SpriteSheet sheet) {
 		this.sheet = sheet;
@@ -38,8 +40,7 @@ public class Screen {
 	}
 
 	public void clear(int color) {
-		for (int i = 0; i < pixels.length; i++)
-			pixels[i] = color;
+		Arrays.fill(pixels, color);
 	}
 
 	/*
@@ -78,14 +79,13 @@ public class Screen {
 		this.yOffset = yOffset;
 	}
 
-	private int[] dither = new int[] { 0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5, };
+	private final int[] dither = new int[] { 0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5, };
 
 	public void overlay(Screen screen2, int xa, int ya) {
-		int[] oPixels = screen2.pixels;
 		int i = 0;
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
-				if (oPixels[i] / 10 <= dither[((x + xa) & 3) + ((y + ya) & 3) * 4]) pixels[i] = 0;
+				if (screen2.pixels[i] / 10 <= dither[((x + xa) & 3) + ((y + ya) & 3) * 4]) pixels[i] = 0;
 				i++;
 			}
 

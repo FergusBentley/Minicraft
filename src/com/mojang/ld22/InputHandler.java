@@ -33,24 +33,24 @@ public class InputHandler implements KeyListener {
 		}
 	}
 
-	public List<Key> keys = new ArrayList<Key>();
+	public final List<Key> keys = new ArrayList<>();
 
-	public Key up = new Key();
-	public Key down = new Key();
-	public Key left = new Key();
-	public Key right = new Key();
-	public Key attack = new Key();
-	public Key menu = new Key();
+	public final Key up = new Key();
+	public final Key down = new Key();
+	public final Key left = new Key();
+	public final Key right = new Key();
+	public final Key attack = new Key();
+	public final Key menu = new Key();
 
 	public void releaseAll() {
-		for (int i = 0; i < keys.size(); i++) {
-			keys.get(i).down = false;
+		for (Key key : keys) {
+			key.down = false;
 		}
 	}
 
 	public void tick() {
-		for (int i = 0; i < keys.size(); i++) {
-			keys.get(i).tick();
+		for (Key key : keys) {
+			key.tick();
 		}
 	}
 

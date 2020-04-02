@@ -1,2 +1,5 @@
 build
 dist
+/minicraft.iml
+/.idea/
+/out/

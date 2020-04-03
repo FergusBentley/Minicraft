@@ -1,6 +1,5 @@
 package com.mojang.ld22.level.tile;
 
-import com.mojang.ld22.entity.AirWizard;
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.entity.Mob;
 import com.mojang.ld22.entity.Player;
@@ -27,7 +26,7 @@ public class CloudCactusTile extends Tile {
 	}
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
-		return e instanceof AirWizard;
+		return false;
 	}
 
 	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
@@ -61,7 +60,6 @@ public class CloudCactusTile extends Tile {
 	}
 
 	public void bumpedInto(Level level, int x, int y, Entity entity) {
-		if (entity instanceof AirWizard) return;
 		entity.hurt(this, x, y, 3);
 	}
 }

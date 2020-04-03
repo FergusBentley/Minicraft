@@ -1,6 +1,5 @@
 package com.mojang.ld22.level.tile;
 
-import com.mojang.ld22.entity.AirWizard;
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.level.Level;
@@ -17,6 +16,6 @@ public class InfiniteFallTile extends Tile {
 	}
 
 	public boolean mayPass(Level level, int x, int y, Entity e) {
-		return e instanceof AirWizard;
+		return false;
 	}
 }

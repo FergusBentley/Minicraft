@@ -5,12 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import com.mojang.ld22.entity.AirWizard;
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.entity.Mob;
 import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.entity.Slime;
-import com.mojang.ld22.entity.Zombie;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.level.levelgen.LevelGen;
 import com.mojang.ld22.level.tile.Tile;
@@ -32,9 +30,7 @@ public class Level {
 	public int monsterDensity = 8;
 
 	public final List<Entity> entities = new ArrayList<>();
-	private final Comparator<Entity> spriteSorter = (e0, e1) -> {
-		return Integer.compare(e0.y, e1.y);
-	};
+	private final Comparator<Entity> spriteSorter = Comparator.comparingInt(e0 -> e0.y);
 
 	@SuppressWarnings("unchecked")
 	public Level(int w, int h, int level, Level parentLevel) {
@@ -95,13 +91,6 @@ public class Level {
 		entitiesInTiles = new ArrayList[w * h];
 		for (int i = 0; i < w * h; i++) {
 			entitiesInTiles[i] = new ArrayList<>();
-		}
-		
-		if (level==1) {
-			AirWizard aw = new AirWizard();
-			aw.x = w*8;
-			aw.y = h*8;
-			add(aw);
 		}
 	}
 
@@ -229,7 +218,6 @@ public class Level {
 
 	public void trySpawn(int count) {
 		for (int i = 0; i < count; i++) {
-			Mob mob;
 
 			int minLevel = 1;
 			int maxLevel = 1;
@@ -241,13 +229,12 @@ public class Level {
 			}
 
 			int lvl = random.nextInt(maxLevel - minLevel + 1) + minLevel;
-			if (random.nextInt(2) == 0)
-				mob = new Slime(lvl);
-			else
-				mob = new Zombie(lvl);
+			if (random.nextInt(2) == 0) {
+				Mob slime = new Slime(lvl);
 
-			if (mob.findStartPos(this)) {
-				this.add(mob);
+				if (slime.findStartPos(this)) {
+					this.add(slime);
+				}
 			}
 		}
 	}

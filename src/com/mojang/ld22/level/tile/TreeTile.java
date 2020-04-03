@@ -22,9 +22,10 @@ public class TreeTile extends Tile {
 	}
 
 	public void render(Screen screen, Level level, int x, int y) {
-		int col = Color.get(10, 30, 151, level.grassColor);
-		int barkCol1 = Color.get(10, 30, 430, level.grassColor);
-		int barkCol2 = Color.get(10, 30, 320, level.grassColor);
+		int gc = level.getGrassColor(x, y);
+		int col = Color.get(10, 30, 151, gc);
+		int barkCol1 = Color.get(10, 30, 430, gc);
+		int barkCol2 = Color.get(10, 30, 320, gc);
 
 		boolean u = level.getTile(x, y - 1) == this;
 		boolean l = level.getTile(x - 1, y) == this;

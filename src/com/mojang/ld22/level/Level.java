@@ -1,17 +1,16 @@
 package com.mojang.ld22.level;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.mojang.ld22.entity.Entity;
 import com.mojang.ld22.entity.Mob;
 import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.entity.Slime;
+import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.level.levelgen.LevelGen;
 import com.mojang.ld22.level.tile.Tile;
+import uk.fergcb.minicraft.level.BiomeType;
 
 public class Level {
 	private final Random random = new Random();
@@ -21,6 +20,7 @@ public class Level {
 
 	public final byte[] tiles;
 	public final byte[] data;
+	public final byte[] biome;
 	public final List<Entity>[] entitiesInTiles;
 
 	public final int grassColor = 141;
@@ -57,6 +57,17 @@ public class Level {
 
 		tiles = maps[0];
 		data = maps[1];
+		if (maps.length == 3) {
+			biome = maps[2];
+		}
+		else {
+			biome = new byte[w * h];
+			for (int y = 0; y < h; y++) {
+				for (int x = 0; x < w; x++) {
+					biome[x + y * w] = (byte)Arrays.asList(BiomeType.values()).indexOf(BiomeType.CAVE);
+				}
+			}
+		}
 
 		if (parentLevel != null) {
 			for (int y = 0; y < h; y++)
@@ -186,6 +197,43 @@ public class Level {
 	public void setData(int x, int y, int val) {
 		if (x < 0 || y < 0 || x >= w || y >= h) return;
 		data[x + y * w] = (byte) val;
+	}
+
+	public BiomeType getBiome(int x, int y) {
+		if (x < 0 || y < 0 || x >= w || y >= h) return BiomeType.CAVE;
+		int b = biome[x + y * w] & 0xff;
+		return BiomeType.values()[b];
+	}
+
+	public int getGrassColor(int x, int y) {
+		int r = 0, g = 0, b = 0;
+		int radius = 1;
+		int count = 0;
+		for(int yy = -radius; yy <= radius; yy++) {
+			for(int xx = -radius; xx <= radius; xx++) {
+				count += 1;
+				int col = getBiome(x + xx, y + yy).getGrassColor();
+				r += Color.red(col);
+				g += Color.green(col);
+				b += Color.blue(col);
+			}
+		}
+		return Color.fromRGB(r / count, g / count, b / count);
+	}
+
+	public int getDirtColor(int x, int y) {
+		int r = 0, g = 0, b = 0;
+		int radius = 1;
+		int area = 4 * radius * radius;
+		for(int yy = -radius; yy < radius; yy++) {
+			for(int xx = -radius; xx < radius; xx++) {
+				int col = getBiome(x + xx, y + yy).getDirtColor();
+				r += Color.red(col) / area;
+				g += Color.green(col) / area;
+				b += Color.blue(col) / area;
+			}
+		}
+		return Color.fromRGB(r, g, b);
 	}
 
 	public void add(Entity entity) {

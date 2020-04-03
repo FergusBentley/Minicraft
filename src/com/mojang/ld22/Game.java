@@ -28,8 +28,8 @@ import com.mojang.ld22.screen.WonMenu;
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	public static final String NAME = "Minicraft";
-	public static final int HEIGHT = 120;
-	public static final int WIDTH = 160;
+	public static final int HEIGHT = 300;
+	public static final int WIDTH = 400;
 	private static final int SCALE = 3;
 
 	private final BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

@@ -1,12 +1,18 @@
 package com.mojang.ld22.level.levelgen;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.*;
 
+import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.level.tile.Tile;
+import uk.fergcb.minicraft.level.BiomeType;
+import uk.fergcb.minicraft.util.Point;
 
 public class LevelGen {
 	private static final Random random = new Random();
@@ -76,6 +82,7 @@ public class LevelGen {
 		do {
 			byte[][] result = createTopMap(w, h);
 
+			/*
 			int[] count = new int[256];
 
 			for (int i = 0; i < w * h; i++) {
@@ -86,7 +93,7 @@ public class LevelGen {
 			if (count[Tile.grass.id & 0xff] < 100) continue;
 			if (count[Tile.tree.id & 0xff] < 100) continue;
 			if (count[Tile.stairsDown.id & 0xff] < 2) continue;
-
+			*/
 			return result;
 
 		} while (true);
@@ -131,122 +138,85 @@ public class LevelGen {
 	}
 
 	private static byte[][] createTopMap(int w, int h) {
-		LevelGen mnoise1 = new LevelGen(w, h, 16);
-		LevelGen mnoise2 = new LevelGen(w, h, 16);
-		LevelGen mnoise3 = new LevelGen(w, h, 16);
+		int sum = 0;
+		int count = 0;
 
-		LevelGen noise1 = new LevelGen(w, h, 32);
-		LevelGen noise2 = new LevelGen(w, h, 32);
-
+		LevelGen noise = new LevelGen(w, h, 16);
+		LevelGen tnoise = new LevelGen(w, h, 16);
+		LevelGen mnoise = new LevelGen(w, h, 16);
+		LevelGen cnoise = new LevelGen(w, h, 16);
+		LevelGen fnoise = new LevelGen(w, h, 2);
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];
+		byte[] biome = new byte[w * h];
+		ArrayList<Point> points = new ArrayList<>();
+		HashMap<Point, BiomeType> biomes = new HashMap<>();
+		for (int y = 0; y < h; y += 4) {
+			for (int x = 0; x < w; x += 4) {
+				int xx = x + random.nextInt(8) - 4;
+				if (xx < 0) xx = 0;
+				if (xx >= w) xx = w - 1;
+				int yy = y + random.nextInt(8) - 4;
+				if (yy < 0) yy = 0;
+				if (yy >= h) yy = h - 1;
+				Point p = new Point(xx, yy);
+				points.add(p);
+
+				int i = xx + yy * w;
+				double n = noise.values[i];
+				boolean t = x < 10 || y < 10
+				      || x > w - 10 || y > h - 10
+					  || n > .05d;
+
+				BiomeType bb = BiomeType.OCEAN;
+				if (!t) {
+					if (n > 0.4) {
+						bb = BiomeType.MOUNTAINS;
+					}
+					else {
+						double best = Double.POSITIVE_INFINITY;
+						int pt = (int)(tnoise.values[i] * 500) + 500;
+						sum += pt;
+						count++;
+						int pm = (int)(mnoise.values[i] * 500) + 500;
+						Point c = new Point(pt, pm);
+						for (BiomeType bt : BiomeType.values()) {
+							if (bt.getLevel() != 0) continue;
+							Point ideal = new Point(bt.getTemperature(), bt.getMoisture());
+							double score = c.dist(ideal);
+							if (score < best) {
+								best = score;
+								bb = bt;
+							}
+						}
+					}
+				}
+				biomes.put(p, bb);
+			}
+		}
+
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
 				int i = x + y * w;
-
-				double val = Math.abs(noise1.values[i] - noise2.values[i]) * 3 - 2;
-				double mval = Math.abs(mnoise1.values[i] - mnoise2.values[i]);
-				mval = Math.abs(mval - mnoise3.values[i]) * 3 - 2;
-
-				double xd = x / (w - 1.0) * 2 - 1;
-				double yd = y / (h - 1.0) * 2 - 1;
-				if (xd < 0) xd = -xd;
-				if (yd < 0) yd = -yd;
-				double dist = Math.max(xd, yd);
-				dist = dist * dist * dist * dist;
-				dist = dist * dist * dist * dist;
-				val = val + 1 - dist * 20;
-
-				if (val < -0.5) {
-					map[i] = Tile.water.id;
-				} else if (val > 0.5 && mval < -1.5) {
-					map[i] = Tile.rock.id;
-				} else {
-					map[i] = Tile.grass.id;
-				}
-			}
-		}
-
-		for (int i = 0; i < w * h / 2800; i++) {
-			int xs = random.nextInt(w);
-			int ys = random.nextInt(h);
-			for (int k = 0; k < 10; k++) {
-				int x = xs + random.nextInt(21) - 10;
-				int y = ys + random.nextInt(21) - 10;
-				for (int j = 0; j < 100; j++) {
-					int xo = x + random.nextInt(5) - random.nextInt(5);
-					int yo = y + random.nextInt(5) - random.nextInt(5);
-					for (int yy = yo - 1; yy <= yo + 1; yy++)
-						for (int xx = xo - 1; xx <= xo + 1; xx++)
-							if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
-								if (map[xx + yy * w] == Tile.grass.id) {
-									map[xx + yy * w] = Tile.sand.id;
-								}
-							}
-				}
-			}
-		}
-
-		/*
-		 * for (int i = 0; i < w * h / 2800; i++) { int xs = random.nextInt(w); int ys = random.nextInt(h); for (int k = 0; k < 10; k++) { int x = xs + random.nextInt(21) - 10; int y = ys + random.nextInt(21) - 10; for (int j = 0; j < 100; j++) { int xo = x + random.nextInt(5) - random.nextInt(5); int yo = y + random.nextInt(5) - random.nextInt(5); for (int yy = yo - 1; yy <= yo + 1; yy++) for (int xx = xo - 1; xx <= xo + 1; xx++) if (xx >= 0 && yy >= 0 && xx < w && yy < h) { if (map[xx + yy * w] == Tile.grass.id) { map[xx + yy * w] = Tile.dirt.id; } } } } }
-		 */
-
-		for (int i = 0; i < w * h / 400; i++) {
-			int x = random.nextInt(w);
-			int y = random.nextInt(h);
-			for (int j = 0; j < 200; j++) {
-				int xx = x + random.nextInt(15) - random.nextInt(15);
-				int yy = y + random.nextInt(15) - random.nextInt(15);
-				if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
-					if (map[xx + yy * w] == Tile.grass.id) {
-						map[xx + yy * w] = Tile.tree.id;
+				Point c = new Point(x, y);
+				Point closest = points.get(0);
+				double dist = Double.POSITIVE_INFINITY;
+				for (Point p : points) {
+					double d = p.dist(c);
+					if (d < dist) {
+						closest = p;
+						dist = d;
 					}
 				}
+
+				BiomeType b = biomes.get(closest);
+				biome[i] = (byte)Arrays.asList(BiomeType.values()).indexOf(b);
+				map[i] = b.getTileSelector().select(noise.values[i], cnoise.values[i], fnoise.values[i], tnoise.values[i], mnoise.values[i], random);
+
 			}
 		}
-
-		for (int i = 0; i < w * h / 400; i++) {
-			int x = random.nextInt(w);
-			int y = random.nextInt(h);
-			int col = random.nextInt(4);
-			for (int j = 0; j < 30; j++) {
-				int xx = x + random.nextInt(5) - random.nextInt(5);
-				int yy = y + random.nextInt(5) - random.nextInt(5);
-				if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
-					if (map[xx + yy * w] == Tile.grass.id) {
-						map[xx + yy * w] = Tile.flower.id;
-						data[xx + yy * w] = (byte) (col + random.nextInt(4) * 16);
-					}
-				}
-			}
-		}
-
-		for (int i = 0; i < w * h / 100; i++) {
-			int xx = random.nextInt(w);
-			int yy = random.nextInt(h);
-			if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
-				if (map[xx + yy * w] == Tile.sand.id) {
-					map[xx + yy * w] = Tile.cactus.id;
-				}
-			}
-		}
-
-		int count = 0;
-		stairsLoop: for (int i = 0; i < w * h / 100; i++) {
-			int x = random.nextInt(w - 2) + 1;
-			int y = random.nextInt(h - 2) + 1;
-
-			for (int yy = y - 1; yy <= y + 1; yy++)
-				for (int xx = x - 1; xx <= x + 1; xx++) {
-					if (map[xx + yy * w] != Tile.rock.id) continue stairsLoop;
-				}
-
-			map[x + y * w] = Tile.stairsDown.id;
-			count++;
-			if (count == 4) break;
-		}
-
-		return new byte[][] { map, data };
+		System.out.println(sum / count);
+		return new byte[][] {map, data, biome};
 	}
 
 	private static byte[][] createUndergroundMap(int w, int h, int depth) {
@@ -409,7 +379,9 @@ public class LevelGen {
 			int w = 256;
 			int h = 256;
 
-			byte[] map = LevelGen.createAndValidateTopMap(w, h)[0];
+			byte[][] level = LevelGen.createAndValidateTopMap(w, h);
+			byte[] map = level[0];
+			byte[] biome = level[2];
 			// byte[] map = LevelGen.createAndValidateUndergroundMap(w, h, (d % 3) + 1)[0];
 			// byte[] map = LevelGen.createAndValidateSkyMap(w, h)[0];
 
@@ -420,16 +392,21 @@ public class LevelGen {
 					int i = x + y * w;
 
 					if (map[i] == Tile.water.id) pixels[i] = 0x000080;
-					if (map[i] == Tile.grass.id) pixels[i] = 0x208020;
+					if (map[i] == Tile.grass.id) {
+						BiomeType bt = BiomeType.values()[biome[i]];
+						pixels[i] = Color.toHex(bt.getGrassColor());
+					}
 					if (map[i] == Tile.rock.id) pixels[i] = 0xa0a0a0;
 					if (map[i] == Tile.dirt.id) pixels[i] = 0x604040;
 					if (map[i] == Tile.sand.id) pixels[i] = 0xa0a040;
-					if (map[i] == Tile.tree.id) pixels[i] = 0x003000;
+					if (map[i] == Tile.tree.id) pixels[i] = 0x005000;
 					if (map[i] == Tile.lava.id) pixels[i] = 0xff2020;
 					if (map[i] == Tile.cloud.id) pixels[i] = 0xa0a0a0;
 					if (map[i] == Tile.stairsDown.id) pixels[i] = 0xffffff;
 					if (map[i] == Tile.stairsUp.id) pixels[i] = 0xffffff;
 					if (map[i] == Tile.cloudCactus.id) pixels[i] = 0xff00ff;
+					if (map[i] == Tile.flower.id) pixels[i] = 0x88EE44;
+
 				}
 			}
 			img.setRGB(0, 0, w, h, pixels, 0, w);

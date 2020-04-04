@@ -20,10 +20,11 @@ public class WheatTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int age = level.getData(x, y);
-		int col = Color.get(level.dirtColor - 121, level.dirtColor - 11, level.dirtColor, 50);
+		int dc = level.getDirtColor(x, y);
+		int col = Color.get(dc - 121, dc - 11, dc, 50);
 		int icon = age / 10;
 		if (icon >= 3) {
-			col = Color.get(level.dirtColor - 121, level.dirtColor - 11, 50 + (icon) * 100, 40 + (icon - 3) * 2 * 100);
+			col = Color.get(dc - 121, dc - 11, 50 + (icon) * 100, 40 + (icon - 3) * 2 * 100);
 			if (age == 50) {
 				col = Color.get(0, 0, 50 + (icon) * 100, 40 + (icon - 3) * 2 * 100);
 			}

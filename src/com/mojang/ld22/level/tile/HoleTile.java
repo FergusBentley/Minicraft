@@ -15,8 +15,9 @@ public class HoleTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(111, 111, 110, 110);
-		int transitionColor1 = Color.get(3, 111, level.dirtColor - 111, level.dirtColor);
-		int transitionColor2 = Color.get(3, 111, level.sandColor - 110, level.sandColor);
+		int dc = level.getDirtColor(x, y);
+		int transitionColor1 = Color.get(3, 111, Color.darken(dc), dc);
+		int transitionColor2 = Color.get(3, 111, Color.sub(level.sandColor, 110), level.sandColor);
 
 		boolean u = !level.getTile(x, y - 1).connectsToLiquid();
 		boolean d = !level.getTile(x, y + 1).connectsToLiquid();

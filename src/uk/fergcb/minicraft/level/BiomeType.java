@@ -17,7 +17,7 @@ public enum BiomeType {
         }
         return Tile.grass.id;
     }),
-    PLAINS(0, 550, 400, 240, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+    PLAINS(0, 550, 400, 240, 332, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.1) {
             int r = rand.nextInt(100);
             if (r < 5)
@@ -33,7 +33,7 @@ public enum BiomeType {
         }
         return Tile.grass.id;
     }),
-    DESERT(0, 750, 200, 340, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+    DESERT(0, 750, 200, 340, 443, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.1) {
             int r = rand.nextInt(100);
             if (r < 10)
@@ -45,13 +45,13 @@ public enum BiomeType {
     ARCTIC(0, 250, 250, 53, 322, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.grass.id;
     }),
-    TUNDRA(0, 300, 300, 242, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+    TUNDRA(0, 300, 300, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.grass.id;
     }),
-    HOT_TUNDRA(0, 600, 200, 231, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+    HOT_TUNDRA(0, 600, 200, 231, 222, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.grass.id;
     }),
-    SWAMP(0, 400, 1000, 121, 300, (double n, double c, double f, double t, double m, Random rand) -> {
+    SWAMP(0, 400, 1000, 121, 310, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
             if (rand.nextInt(100) < 70)
                 return Tile.water.id;

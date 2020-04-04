@@ -16,7 +16,7 @@ public class FarmTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int dc = level.getDirtColor(x, y);
-		int col = Color.get(dc - 121, dc - 11, dc, dc + 111);
+		int col = Color.get(Color.darken(dc), Color.sub(dc, 11), dc, Color.lighten(dc));
 		screen.render(x * 16, y * 16, 2 + 32, col, 1);
 		screen.render(x * 16 + 8, y * 16, 2 + 32, col, 0);
 		screen.render(x * 16, y * 16 + 8, 2 + 32, col, 0);

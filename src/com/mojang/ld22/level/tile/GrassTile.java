@@ -21,8 +21,8 @@ public class GrassTile extends Tile {
 	public void render(Screen screen, Level level, int x, int y) {
 		int gc = level.getGrassColor(x, y);
 		int dc = level.getDirtColor(x, y);
-		int col = Color.get(gc, gc, gc + 111, gc + 111);
-		int transitionColor = Color.get(gc - 111, gc, gc + 111, dc);
+		int col = Color.get(gc, gc, Color.lighten(gc), Color.lighten(gc));
+		int transitionColor = Color.get(Color.darken(gc), gc, Color.lighten(gc), dc);
 
 		boolean u = !level.getTile(x, y - 1).connectsToGrass;
 		boolean d = !level.getTile(x, y + 1).connectsToGrass;

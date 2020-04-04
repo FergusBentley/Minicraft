@@ -26,7 +26,7 @@ public enum BiomeType {
         }
         return Tile.grass.id;
     }),
-    FOREST(0, 400, 600, 132, 321, (double n, double c, double f, double t, double m, Random rand) -> {
+    FOREST(0, 400, 600, 41, 321, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
             if (rand.nextInt(100) < 70)
                 return Tile.tree.id;
@@ -51,14 +51,14 @@ public enum BiomeType {
     HOT_TUNDRA(0, 600, 200, 231, 322, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.grass.id;
     }),
-    SWAMP(0, 400, 1000, 121, 321, (double n, double c, double f, double t, double m, Random rand) -> {
+    SWAMP(0, 400, 1000, 121, 300, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
             if (rand.nextInt(100) < 70)
                 return Tile.water.id;
         }
         return Tile.grass.id;
     }),
-    OCEAN(255, 500, 1000, 142, 211, (double n, double c, double f, double t, double m, Random rand) -> {
+    OCEAN(255, 500, 1000, 141, 211, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.water.id;
     }),
     MOUNTAINS(255, 500, 500, 141, 322, (double n, double c, double f, double t, double m, Random rand) -> {

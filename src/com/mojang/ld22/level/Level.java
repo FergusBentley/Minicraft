@@ -209,10 +209,13 @@ public class Level {
 		int r = 0, g = 0, b = 0;
 		int radius = 1;
 		int count = 0;
+		BiomeType tb = getBiome(x, y);
 		for(int yy = -radius; yy <= radius; yy++) {
 			for(int xx = -radius; xx <= radius; xx++) {
 				count += 1;
-				int col = getBiome(x + xx, y + yy).getGrassColor();
+				BiomeType bi = getBiome(x + xx, y + yy);
+				if (bi.equals(BiomeType.OCEAN)) bi = tb;
+				int col = bi.getGrassColor();
 				r += Color.red(col);
 				g += Color.green(col);
 				b += Color.blue(col);

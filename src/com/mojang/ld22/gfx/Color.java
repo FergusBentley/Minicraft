@@ -56,13 +56,14 @@ public class Color {
 	}
 
 	public static int sub(int c, int d) {
-		return add(c, -d);
+		return fromRGB(constrain(  red(c) - red(d)),
+				       constrain(green(c) - green(d)),
+				       constrain( blue(c) - blue(d)));
 	}
 
 	private static int constrain(int a) {
 		if (a > 5) return 5;
-		if (a < 0) return -1;
-		return a;
+		return Math.max(a, 0);
 	}
 
 

@@ -9,6 +9,7 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
+import uk.fergcb.minicraft.level.tile.ColourfulFlowerTile;
 
 public class Tile {
 	public static int tickCount = 0;
@@ -35,9 +36,11 @@ public class Tile {
 	public static final Tile cloud = new CloudTile(17);
 	public static final Tile hardRock = new HardRockTile(18);
 	public static final Tile ironOre = new OreTile(19, Resource.ironOre);
-	public static Tile goldOre = new OreTile(20, Resource.goldOre);
-	public static Tile gemOre = new OreTile(21, Resource.gem);
+	public static final Tile goldOre = new OreTile(20, Resource.goldOre);
+	public static final Tile gemOre = new OreTile(21, Resource.gem);
 	public static final Tile cloudCactus = new CloudCactusTile(22);
+
+	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
 
 	public final byte id;
 

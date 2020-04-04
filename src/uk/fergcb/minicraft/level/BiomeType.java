@@ -12,7 +12,7 @@ public enum BiomeType {
             if (r < 10)
                 return Tile.tree.id;
             else if (r < 20)
-                return Tile.flower.id;
+                return Tile.colourfulFlower.id;
 
         }
         return Tile.grass.id;

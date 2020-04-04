@@ -46,15 +46,30 @@ public enum BiomeType {
         return Tile.grass.id;
     }),
     TUNDRA(0, 300, 300, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
+        if (f < 0.1) {
+            int r = rand.nextInt(100);
+            if (r < 10)
+                return Tile.longGrass.id;
+
+        }
         return Tile.grass.id;
     }),
     HOT_TUNDRA(0, 600, 200, 231, 222, (double n, double c, double f, double t, double m, Random rand) -> {
+        if (f < 0.1) {
+            int r = rand.nextInt(100);
+            if (r < 10)
+                return Tile.longGrass.id;
+
+        }
         return Tile.grass.id;
     }),
     SWAMP(0, 400, 1000, 121, 310, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
-            if (rand.nextInt(100) < 70)
+            int r = rand.nextInt(100);
+            if (r < 70)
                 return Tile.water.id;
+            if (r < 90)
+                return Tile.longGrass.id;
         }
         return Tile.grass.id;
     }),

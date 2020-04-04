@@ -10,6 +10,7 @@ import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import uk.fergcb.minicraft.level.tile.ColourfulFlowerTile;
+import uk.fergcb.minicraft.level.tile.LongGrassTile;
 
 public class Tile {
 	public static int tickCount = 0;
@@ -41,6 +42,7 @@ public class Tile {
 	public static final Tile cloudCactus = new CloudCactusTile(22);
 
 	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
+	public static final Tile longGrass = new LongGrassTile(24);
 
 	public final byte id;
 

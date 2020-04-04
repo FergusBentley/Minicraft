@@ -224,16 +224,17 @@ public class Level {
 	public int getDirtColor(int x, int y) {
 		int r = 0, g = 0, b = 0;
 		int radius = 1;
-		int area = 4 * radius * radius;
-		for(int yy = -radius; yy < radius; yy++) {
-			for(int xx = -radius; xx < radius; xx++) {
+		int count = 0;
+		for(int yy = -radius; yy <= radius; yy++) {
+			for(int xx = -radius; xx <= radius; xx++) {
+				count += 1;
 				int col = getBiome(x + xx, y + yy).getDirtColor();
-				r += Color.red(col) / area;
-				g += Color.green(col) / area;
-				b += Color.blue(col) / area;
+				r += Color.red(col);
+				g += Color.green(col);
+				b += Color.blue(col);
 			}
 		}
-		return Color.fromRGB(r, g, b);
+		return Color.fromRGB(r / count, g / count, b / count);
 	}
 
 	public void add(Entity entity) {

@@ -8,6 +8,8 @@ import com.mojang.ld22.level.tile.Tile;
 public class Resource {
 
 	public static final Resource snow = new PlantableResource("Snow", 2 + 4 * 32, Color.get(-1, 11, 344, 455), Tile.snow, Tile.grass, Tile.dirt);
+	public static final Resource pineCone = new PlantableResource("PineCn", 25 + 4 * 32, Color.get(-1, 100, 411, 210), Tile.spruceSapling, Tile.grass);
+	public static final Resource spruceWood = new Resource("Wood", 1 + 4 * 32, Color.get(-1, 100, 411, 310));
 
 	public static final Resource wood = new Resource("Wood", 1 + 4 * 32, Color.get(-1, 200, 531, 430));
 	public static final Resource stone = new Resource("Stone", 2 + 4 * 32, Color.get(-1, 111, 333, 555));

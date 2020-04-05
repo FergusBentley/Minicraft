@@ -29,7 +29,10 @@ public enum BiomeType {
     FOREST(0, 400, 600, 41, 321, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
             if (rand.nextInt(100) < 70)
-                return Tile.tree.id;
+                if (rand.nextInt(2) < 1)
+                    return Tile.tree.id;
+                else
+                    return Tile.spruce.id;
         }
         return Tile.grass.id;
     }),
@@ -43,6 +46,12 @@ public enum BiomeType {
         return Tile.sand.id;
     }),
     ARCTIC(0, 200, 200, 242, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+        if (f < 0.1) {
+            int r = rand.nextInt(100);
+            if (r < 10)
+                return Tile.snowySpruce.id;
+
+        }
         return Tile.snow.id;
     }),
     TUNDRA(0, 350, 325, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
@@ -50,6 +59,8 @@ public enum BiomeType {
             int r = rand.nextInt(100);
             if (r < 10)
                 return Tile.longGrass.id;
+            if (r < 15)
+                return Tile.spruce.id;
 
         }
         return Tile.grass.id;

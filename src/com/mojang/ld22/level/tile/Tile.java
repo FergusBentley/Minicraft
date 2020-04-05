@@ -12,16 +12,13 @@ import com.mojang.ld22.level.Level;
 import uk.fergcb.minicraft.level.tile.ColourfulFlowerTile;
 import uk.fergcb.minicraft.level.tile.LongGrassTile;
 import uk.fergcb.minicraft.level.tile.SnowTile;
+import uk.fergcb.minicraft.level.tile.SpruceTreeTile;
 
 public class Tile {
 	public static int tickCount = 0;
 	protected final Random random = new Random();
 
 	public static final Tile[] tiles = new Tile[256];
-
-	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
-	public static final Tile longGrass = new LongGrassTile(24);
-	public static final Tile snow = new SnowTile(25);
 
 	public static final Tile grass = new GrassTile(0);
 	public static final Tile rock = new RockTile(1);
@@ -42,10 +39,18 @@ public class Tile {
 	public static final Tile infiniteFall = new InfiniteFallTile(16);
 	public static final Tile cloud = new CloudTile(17);
 	public static final Tile hardRock = new HardRockTile(18);
+	public static final Tile cloudCactus = new CloudCactusTile(22);
+
+	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
+	public static final Tile longGrass = new LongGrassTile(24);
+	public static final Tile snow = new SnowTile(25);
+	public static final Tile spruce = new SpruceTreeTile(26, "grass");
+	public static final Tile snowySpruce = new SpruceTreeTile(27, "snow");
+	public static final Tile spruceSapling = new SaplingTile(28, grass, spruce);
+
 	public static final Tile ironOre = new OreTile(19, Resource.ironOre);
 	public static final Tile goldOre = new OreTile(20, Resource.goldOre);
 	public static final Tile gemOre = new OreTile(21, Resource.gem);
-	public static final Tile cloudCactus = new CloudCactusTile(22);
 
 	public final byte id;
 

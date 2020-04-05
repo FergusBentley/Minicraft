@@ -16,7 +16,7 @@ import com.mojang.ld22.level.tile.Tile;
 
 public class ColourfulFlowerTile extends GrassTile {
 
-	private static int[] colors = {515, 500, 520, 315, 235, 45};
+	private static int[] colors = {515, 500, 520, 315, 235, 25};
 
 	public ColourfulFlowerTile(int id) {
 		super(id);
@@ -30,12 +30,28 @@ public class ColourfulFlowerTile extends GrassTile {
 		int data = level.getData(x, y);
 		int shape = (x + y - 321) / 2 % 2;
 		int color = colors[((x % 6) + (y % 6)) / 2];
-		int flowerCol = Color.get(Color.darken(level.getGrassColor(x, y)), level.getGrassColor(x, y), color, 550);
+		int flowerCol = Color.get(Color.sub(level.getGrassColor(x, y), 222), level.getGrassColor(x, y), color, 550);
 
-		if (shape == 0) screen.render(x * 16, y * 16, 1 + 32, flowerCol, 0);
-		if (shape == 1) screen.render(x * 16 + 8, y * 16, 1 + 32, flowerCol, 0);
-		if (shape == 1) screen.render(x * 16, y * 16 + 8, 1 + 32, flowerCol, 0);
-		if (shape == 0) screen.render(x * 16 + 8, y * 16 + 8, 1 + 32, flowerCol, 0);
+		boolean u = !level.getTile(x, y - 1).connectsToGrass;
+		boolean d = !level.getTile(x, y + 1).connectsToGrass;
+		boolean l = !level.getTile(x - 1, y).connectsToGrass;
+		boolean r = !level.getTile(x + 1, y).connectsToGrass;
+
+		if (shape == 0 && ((d && l) || (u && r))) shape = 1;
+		if (shape == 1 && ((u && l) || (d && r))) shape = 0;
+
+		if (shape == 0) {
+			if (!u && !l) screen.render(x * 16, y * 16, 1 + 32, flowerCol, 0);
+			if (!d && !r) screen.render(x * 16 + 8, y * 16 + 8, 1 + 32, flowerCol, 0);
+		}
+
+		if (shape == 1) {
+			if (!u && !r) screen.render(x * 16 + 8, y * 16, 1 + 32, flowerCol, 0);
+			if (!d && !l) screen.render(x * 16, y * 16 + 8, 1 + 32, flowerCol, 0);
+		}
+
+
+		if (u && d || l && r) screen.render(x * 16 + 4, y * 16 + 4, 1 + 32, flowerCol, 0);
 	}
 
 	public boolean interact(Level level, int x, int y, Player player, Item item, int attackDir) {

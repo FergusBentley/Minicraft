@@ -42,7 +42,7 @@ public enum BiomeType {
         }
         return Tile.sand.id;
     }),
-    ARCTIC(0, 250, 250, 53, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+    ARCTIC(0, 250, 250, 142, 322, (double n, double c, double f, double t, double m, Random rand) -> {
         return Tile.grass.id;
     }),
     TUNDRA(0, 300, 300, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
@@ -54,7 +54,7 @@ public enum BiomeType {
         }
         return Tile.grass.id;
     }),
-    HOT_TUNDRA(0, 600, 200, 231, 222, (double n, double c, double f, double t, double m, Random rand) -> {
+    HOT_TUNDRA(0, 600, 200, 340, 222, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.1) {
             int r = rand.nextInt(100);
             if (r < 10)
@@ -68,7 +68,7 @@ public enum BiomeType {
             int r = rand.nextInt(100);
             if (r < 70)
                 return Tile.water.id;
-            if (r < 90)
+            if (r < 97)
                 return Tile.longGrass.id;
         }
         return Tile.grass.id;

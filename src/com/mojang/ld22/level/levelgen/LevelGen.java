@@ -398,7 +398,7 @@ public class LevelGen {
 					}
 					if (map[i] == Tile.rock.id) pixels[i] = 0xa0a0a0;
 					if (map[i] == Tile.dirt.id) pixels[i] = 0x604040;
-					if (map[i] == Tile.sand.id) pixels[i] = 0xa0a040;
+					if (map[i] == Tile.sand.id) pixels[i] = 0xc0c020;
 					if (map[i] == Tile.tree.id) pixels[i] = 0x005000;
 					if (map[i] == Tile.lava.id) pixels[i] = 0xff2020;
 					if (map[i] == Tile.cloud.id) pixels[i] = 0xa0a0a0;

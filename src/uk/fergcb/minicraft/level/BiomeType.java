@@ -42,10 +42,10 @@ public enum BiomeType {
         }
         return Tile.sand.id;
     }),
-    ARCTIC(0, 250, 250, 142, 322, (double n, double c, double f, double t, double m, Random rand) -> {
-        return Tile.grass.id;
+    ARCTIC(0, 200, 200, 242, 322, (double n, double c, double f, double t, double m, Random rand) -> {
+        return Tile.snow.id;
     }),
-    TUNDRA(0, 300, 300, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
+    TUNDRA(0, 350, 325, 242, 222, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.1) {
             int r = rand.nextInt(100);
             if (r < 10)

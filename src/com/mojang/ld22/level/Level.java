@@ -24,7 +24,8 @@ public class Level {
 	public final List<Entity>[] entitiesInTiles;
 
 	public final int grassColor = 141;
-	public int dirtColor = 322;
+	public final int dirtColor = 322;
+	public final int snowColor = 455;
 	public final int sandColor = 550;
 	private final int depth;
 	public int monsterDensity = 8;
@@ -34,17 +35,11 @@ public class Level {
 
 	@SuppressWarnings("unchecked")
 	public Level(int w, int h, int level, Level parentLevel) {
-		if (level < 0) {
-			dirtColor = 222;
-		}
 		this.depth = level;
 		this.w = w;
 		this.h = h;
 		byte[][] maps;
 
-		if (level == 1) {
-			dirtColor = 444;
-		}
 		if (level == 0)
 			maps = LevelGen.createAndValidateTopMap(w, h);
 		else if (level < 0) {

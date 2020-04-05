@@ -23,7 +23,8 @@ public class PlantableResource extends Resource {
 
 	public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
 		if (sourceTiles.contains(tile)) {
-			level.setTile(xt, yt, targetTile, 0);
+			if (targetTile == null) System.out.println("target tile was null :(");
+			else level.setTile(xt, yt, targetTile, 0);
 			return true;
 		}
 		return false;

@@ -406,6 +406,7 @@ public class LevelGen {
 					if (map[i] == Tile.stairsUp.id) pixels[i] = 0xffffff;
 					if (map[i] == Tile.cloudCactus.id) pixels[i] = 0xff00ff;
 					if (map[i] == Tile.flower.id) pixels[i] = 0x88EE44;
+					if (map[i] == Tile.snow.id) pixels[i] = 0xCCFFFF;
 
 				}
 			}

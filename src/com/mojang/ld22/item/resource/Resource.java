@@ -6,6 +6,9 @@ import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 
 public class Resource {
+
+	public static final Resource snow = new PlantableResource("Snow", 2 + 4 * 32, Color.get(-1, 11, 344, 455), Tile.snow, Tile.grass, Tile.dirt);
+
 	public static final Resource wood = new Resource("Wood", 1 + 4 * 32, Color.get(-1, 200, 531, 430));
 	public static final Resource stone = new Resource("Stone", 2 + 4 * 32, Color.get(-1, 111, 333, 555));
 	public static final Resource flower = new PlantableResource("Flower", 4 * 32, Color.get(-1, 10, 444, 330), Tile.flower, Tile.grass);

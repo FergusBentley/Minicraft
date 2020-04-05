@@ -11,12 +11,18 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import uk.fergcb.minicraft.level.tile.ColourfulFlowerTile;
 import uk.fergcb.minicraft.level.tile.LongGrassTile;
+import uk.fergcb.minicraft.level.tile.SnowTile;
 
 public class Tile {
 	public static int tickCount = 0;
 	protected final Random random = new Random();
 
 	public static final Tile[] tiles = new Tile[256];
+
+	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
+	public static final Tile longGrass = new LongGrassTile(24);
+	public static final Tile snow = new SnowTile(25);
+
 	public static final Tile grass = new GrassTile(0);
 	public static final Tile rock = new RockTile(1);
 	public static final Tile water = new WaterTile(2);
@@ -41,15 +47,13 @@ public class Tile {
 	public static final Tile gemOre = new OreTile(21, Resource.gem);
 	public static final Tile cloudCactus = new CloudCactusTile(22);
 
-	public static final Tile colourfulFlower = new ColourfulFlowerTile(23);
-	public static final Tile longGrass = new LongGrassTile(24);
-
 	public final byte id;
 
 	public boolean connectsToGrass = false;
 	public boolean connectsToSand = false;
 	public boolean connectsToLava = false;
 	public boolean connectsToWater = false;
+	public boolean connectsToSnow = false;
 
 	public Tile(int id) {
 		this.id = (byte) id;

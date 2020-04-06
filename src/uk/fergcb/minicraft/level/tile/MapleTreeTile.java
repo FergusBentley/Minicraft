@@ -18,25 +18,17 @@ import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.item.PlankItem;
 import uk.fergcb.minicraft.item.WoodVariety;
 
-public class SpruceTreeTile extends Tile {
-
-	private String ground;
-
-	public SpruceTreeTile(int id, String ground) {
+public class MapleTreeTile extends Tile {
+	public MapleTreeTile(int id) {
 		super(id);
-		connectsToGrass = ground.equals("grass");
-		connectsToSnow = ground.equals("snow");
-		this.ground = ground;
+		connectsToGrass = true;
 	}
 
 	public void render(Screen screen, Level level, int x, int y) {
-		int ground = this.ground.equals("snow") ? level.snowColor : level.getGrassColor(x, y);
-
-		int leavesLight = this.ground.equals("snow") ? 455 : 42;
-		int leaves = 21;
-		int border = 10;
-		int barkLight = 520;
-		int barkDark = 410;
+		int gc = level.getGrassColor(x, y);
+		int col = Color.get(100, 300, 411, gc);
+		int barkCol1 = Color.get(100, 300, 420, gc);
+		int barkCol2 = Color.get(100, 300, 310, gc);
 
 		boolean u = level.getTile(x, y - 1) == this;
 		boolean l = level.getTile(x - 1, y) == this;
@@ -47,27 +39,25 @@ public class SpruceTreeTile extends Tile {
 		boolean dl = level.getTile(x - 1, y + 1) == this;
 		boolean dr = level.getTile(x + 1, y + 1) == this;
 
-		int snowOffset = this.ground.equals("snow") ? -2 : 0;
-
 		if (u && ul && l) {
-			screen.render(x * 16, y * 16, 26 + 32 + snowOffset, Color.get(border, leaves, leavesLight, barkDark), 0);
+			screen.render(x * 16, y * 16, 10 + 32, col, 0);
 		} else {
-			screen.render(x * 16, y * 16, 25 + snowOffset, Color.get(border, leaves, leavesLight, ground), 0);
+			screen.render(x * 16, y * 16, 9, col, 0);
 		}
 		if (u && ur && r) {
-			screen.render(x * 16 + 8, y * 16, 26 + 2 * 32 + snowOffset, Color.get(border, leaves, barkDark, ground), 0);
+			screen.render(x * 16 + 8, y * 16, 10 + 2 * 32, barkCol2, 0);
 		} else {
-			screen.render(x * 16 + 8, y * 16, 26 + snowOffset, Color.get(border, leaves, leavesLight, ground), 0);
+			screen.render(x * 16 + 8, y * 16, 10, col, 0);
 		}
 		if (d && dl && l) {
-			screen.render(x * 16, y * 16 + 8, 26 + 2 * 32 + snowOffset, Color.get(border, leaves, barkDark, ground), 0);
+			screen.render(x * 16, y * 16 + 8, 10 + 2 * 32, barkCol2, 0);
 		} else {
-			screen.render(x * 16, y * 16 + 8, 25 + 32 + snowOffset, Color.get(border, leaves, barkLight, ground), 0);
+			screen.render(x * 16, y * 16 + 8, 9 + 32, barkCol1, 0);
 		}
 		if (d && dr && r) {
-			screen.render(x * 16 + 8, y * 16 + 8, 26 + 32 + snowOffset, Color.get(border, leaves, leavesLight, barkDark), 0);
+			screen.render(x * 16 + 8, y * 16 + 8, 10 + 32, col, 0);
 		} else {
-			screen.render(x * 16 + 8, y * 16 + 8, 26 + 3 * 32 + snowOffset, Color.get(border, leaves, barkDark, ground), 0);
+			screen.render(x * 16 + 8, y * 16 + 8, 10 + 3 * 32, barkCol2, 0);
 		}
 	}
 
@@ -98,19 +88,25 @@ public class SpruceTreeTile extends Tile {
 	}
 
 	private void hurt(Level level, int x, int y, int dmg) {
+		{
+			int count = random.nextInt(10) == 0 ? 1 : 0;
+			for (int i = 0; i < count; i++) {
+				level.add(new ItemEntity(new ResourceItem(Resource.apple), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
+			}
+		}
 		int damage = level.getData(x, y) + dmg;
 		level.add(new SmashParticle(x * 16 + 8, y * 16 + 8));
 		level.add(new TextParticle("" + dmg, x * 16 + 8, y * 16 + 8, Color.get(-1, 500, 500, 500)));
 		if (damage >= 20) {
 			int count = random.nextInt(2) + 1;
 			for (int i = 0; i < count; i++) {
-				level.add(new ItemEntity(new PlankItem(WoodVariety.SPRUCE), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
+				level.add(new ItemEntity(new PlankItem(WoodVariety.MAPLE), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
 			}
 			count = random.nextInt(random.nextInt(4) + 1);
 			for (int i = 0; i < count; i++) {
-				level.add(new ItemEntity(new ResourceItem(Resource.pineCone), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
+				level.add(new ItemEntity(new ResourceItem(Resource.acorn), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
 			}
-			level.setTile(x, y, this.ground.equals("snow") ? Tile.snow : Tile.grass, 0);
+			level.setTile(x, y, Tile.grass, 0);
 		} else {
 			level.setData(x, y, damage);
 		}

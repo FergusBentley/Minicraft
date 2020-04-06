@@ -14,6 +14,8 @@ import com.mojang.ld22.item.ToolItem;
 import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
+import uk.fergcb.minicraft.item.PlankItem;
+import uk.fergcb.minicraft.item.WoodVariety;
 
 public class TreeTile extends Tile {
 	public TreeTile(int id) {
@@ -97,7 +99,7 @@ public class TreeTile extends Tile {
 		if (damage >= 20) {
 			int count = random.nextInt(2) + 1;
 			for (int i = 0; i < count; i++) {
-				level.add(new ItemEntity(new ResourceItem(Resource.wood), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
+				level.add(new ItemEntity(new PlankItem(WoodVariety.OAK), x * 16 + random.nextInt(10) + 3, y * 16 + random.nextInt(10) + 3));
 			}
 			count = random.nextInt(random.nextInt(4) + 1);
 			for (int i = 0; i < count; i++) {

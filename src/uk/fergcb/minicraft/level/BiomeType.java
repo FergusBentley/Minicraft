@@ -31,11 +31,15 @@ public enum BiomeType {
     }),
     FOREST(0, 400, 600, 41, 321, (double n, double c, double f, double t, double m, Random rand) -> {
         if (f < 0.2) {
-            if (rand.nextInt(100) < 70)
-                if (rand.nextInt(2) < 1)
-                    return new byte[] {Tile.tree.id, 0};
+            if (rand.nextInt(100) < 70) {
+                int r = rand.nextInt(5);
+                if (r < 1)
+                    return new byte[]{Tile.maple.id, 0};
+                else if (r < 2)
+                    return new byte[]{Tile.birch.id, 0};
                 else
-                    return new byte[] {Tile.spruce.id, 0};
+                    return new byte[]{Tile.tree.id, 0};
+            }
         }
         return new byte[] {Tile.grass.id, 0};
     }),

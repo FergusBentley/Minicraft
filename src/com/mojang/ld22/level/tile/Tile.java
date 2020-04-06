@@ -9,10 +9,7 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
-import uk.fergcb.minicraft.level.tile.ColourfulFlowerTile;
-import uk.fergcb.minicraft.level.tile.LongGrassTile;
-import uk.fergcb.minicraft.level.tile.SnowTile;
-import uk.fergcb.minicraft.level.tile.SpruceTreeTile;
+import uk.fergcb.minicraft.level.tile.*;
 
 public class Tile {
 	public static int tickCount = 0;
@@ -46,7 +43,9 @@ public class Tile {
 	public static final Tile snow = new SnowTile(25);
 	public static final Tile spruce = new SpruceTreeTile(26, "grass");
 	public static final Tile snowySpruce = new SpruceTreeTile(27, "snow");
-	public static final Tile spruceSapling = new SaplingTile(28, grass, spruce);
+	public static final Tile maple = new MapleTreeTile(28);
+	public static final Tile birch = new BirchTreeTile(29);
+	public static final Tile spruceSapling = new SaplingTile(30, grass, spruce);
 
 	public static final Tile ironOre = new OreTile(19, Resource.ironOre);
 	public static final Tile goldOre = new OreTile(20, Resource.goldOre);

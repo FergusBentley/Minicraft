@@ -40,7 +40,6 @@ public class Resource {
 	public final int color;
 
 	public Resource(String name, int sprite, int color) {
-		if (name.length() > 6) throw new RuntimeException("Name cannot be longer than six characters!");
 		this.name = name;
 		this.sprite = sprite;
 		this.color = color;

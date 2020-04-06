@@ -138,9 +138,6 @@ public class LevelGen {
 	}
 
 	private static byte[][] createTopMap(int w, int h) {
-		int sum = 0;
-		int count = 0;
-
 		LevelGen noise = new LevelGen(w, h, 16);
 		LevelGen tnoise = new LevelGen(w, h, 16);
 		LevelGen mnoise = new LevelGen(w, h, 16);
@@ -176,8 +173,6 @@ public class LevelGen {
 					else {
 						double best = Double.POSITIVE_INFINITY;
 						int pt = (int)(tnoise.values[i] * 500) + 500;
-						sum += pt;
-						count++;
 						int pm = (int)(mnoise.values[i] * 500) + 500;
 						Point c = new Point(pt, pm);
 						for (BiomeType bt : BiomeType.values()) {
@@ -211,11 +206,12 @@ public class LevelGen {
 
 				BiomeType b = biomes.get(closest);
 				biome[i] = (byte)Arrays.asList(BiomeType.values()).indexOf(b);
-				map[i] = b.getTileSelector().select(noise.values[i], cnoise.values[i], fnoise.values[i], tnoise.values[i], mnoise.values[i], random);
+				byte[] tileData = b.getTileSelector().select(noise.values[i], cnoise.values[i], fnoise.values[i], tnoise.values[i], mnoise.values[i], random);
+				map[i] = tileData[0];
+				data[i] = tileData[1];
 
 			}
 		}
-		System.out.println(sum / count);
 		return new byte[][] {map, data, biome};
 	}
 

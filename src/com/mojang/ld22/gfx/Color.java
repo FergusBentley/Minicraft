@@ -6,12 +6,28 @@ public class Color {
 		return (get(d) << 24) + (get(c) << 16) + (get(b) << 8) + (get(a));
 	}
 
+	public static int[] unget(int c) {
+		return new int[] {
+				unget2(c & 0xff),
+				unget2((c >> 8) & 0xff),
+				unget2((c >> 16) & 0xff),
+				unget2((c >> 24) & 0xff),
+		};
+	}
+
 	public static int get(int d) {
 		if (d < 0) return 255;
 		int r = d / 100 % 10;
 		int g = d / 10 % 10;
 		int b = d % 10;
 		return r * 36 + g * 6 + b;
+	}
+
+	public static int unget2(int d) {
+		int r = d / 36 % 6;
+		int g = d / 6 % 6;
+		int b = d % 6;
+		return r * 100 + g * 10 + b;
 	}
 
 	public static int toHex(int c) {

@@ -47,7 +47,6 @@ public class LongGrassTile extends GrassTile {
 			if (!d && !l) screen.render(x * 16, y * 16 + 8, 30 + 2 * 32, col, 0);
 		}
 
-
 		if (u && d || l && r) screen.render(x * 16 + 4, y * 16 + 4, 30 + 2 * 32, col, 0);
 	}
 

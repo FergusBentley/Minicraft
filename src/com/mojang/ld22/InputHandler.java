@@ -42,6 +42,8 @@ public class InputHandler implements KeyListener {
 	public final Key attack = new Key();
 	public final Key menu = new Key();
 
+	public final Key sprint = new Key();
+
 	public void releaseAll() {
 		for (Key key : keys) {
 			key.down = false;
@@ -91,6 +93,8 @@ public class InputHandler implements KeyListener {
 
 		if (ke.getKeyCode() == KeyEvent.VK_X) menu.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_C) attack.toggle(pressed);
+
+		if (ke.getKeyCode() == KeyEvent.VK_Z) sprint.toggle(pressed);
 	}
 
 	public void keyTyped(KeyEvent ke) {

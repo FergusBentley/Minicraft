@@ -68,7 +68,7 @@ public class Player extends Mob {
 
 		if (staminaRechargeDelay == 0) {
 			staminaRecharge++;
-			if (isSwimming()) {
+			if (isSwimming() || input.sprint.down) {
 				staminaRecharge = 0;
 			}
 			while (staminaRecharge > 10) {
@@ -79,10 +79,18 @@ public class Player extends Mob {
 
 		int xa = 0;
 		int ya = 0;
-		if (input.up.down) ya--;
-		if (input.down.down) ya++;
-		if (input.left.down) xa--;
-		if (input.right.down) xa++;
+		int v = 1;
+
+		if (input.sprint.down && stamina > 0 && tickTime % 2 == 0) {
+			v = 2;
+			if (tickTime % 20 == 0) stamina--;
+		}
+
+		if (input.up.down) ya -= v;
+		if (input.down.down) ya += v;
+		if (input.left.down) xa -= v;
+		if (input.right.down) xa += v;
+
 		if (isSwimming() && tickTime % 60 == 0) {
 			if (stamina > 0) {
 				stamina--;

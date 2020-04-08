@@ -4,7 +4,7 @@ import com.mojang.ld22.gfx.Color;
 
 public enum WoodVariety implements Variety {
 
-    OAK(531), SPRUCE(422), MAPLE(511), BIRCH(543);
+    ANY(0), OAK(531), SPRUCE(422), MAPLE(511), BIRCH(543);
 
     int color;
 
@@ -19,6 +19,13 @@ public enum WoodVariety implements Variety {
 
     @Override
     public int getColor() {
-        return Color.get(-1, Color.sub(color, 333), color, Color.darken(color));
+        int c = color;
+        if (this == ANY) {
+            WoodVariety[] vs = this.getClass().getEnumConstants();
+            int i = (int)(System.currentTimeMillis() / 1000) % (vs.length - 1);
+            WoodVariety v = vs[i + 1];
+            c = v.color;
+        }
+        return Color.get(-1, Color.sub(c, 333), c, Color.darken(c));
     }
 }

@@ -15,7 +15,7 @@ public class FlowerItem extends VariedItem {
     }
 
     public FlowerItem() {
-        this(Variety.ANY, 0);
+        this(FlowerVariety.ANY, 0);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.sound.Sound;
+import uk.fergcb.minicraft.item.VariedItem;
 
 public class CraftingMenu extends Menu {
 	private final Player player;
@@ -79,6 +80,9 @@ public class CraftingMenu extends Menu {
 				int requiredAmt = 1;
 				if (item instanceof ResourceItem) {
 					requiredAmt = ((ResourceItem) item).count;
+				}
+				else if (item instanceof VariedItem) {
+					requiredAmt = ((VariedItem) item).count;
 				}
 				int has = player.inventory.count(item);
 				int color = Color.get(-1, 555, 555, 555);

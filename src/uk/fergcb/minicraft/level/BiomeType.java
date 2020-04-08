@@ -13,7 +13,7 @@ public enum BiomeType {
             if (r < 10)
                 return new byte[] {Tile.tree.id, 0};
             else if (r < 20) {
-                byte v = (byte)(rand.nextInt(FlowerVariety.values().length) % 255);
+                byte v = (byte)((rand.nextInt(FlowerVariety.values().length - 1) % 255) + 1);
                 return new byte[] {Tile.colourfulFlower.id, v};
             }
 

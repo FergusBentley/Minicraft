@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class VariedItem extends Item implements Comparable<VariedItem> {
+public class VariedItem extends Item {
 
     private int sprite;
 
@@ -27,7 +27,7 @@ public class VariedItem extends Item implements Comparable<VariedItem> {
     }
 
     public VariedItem() {
-        this(13 + 31 * 32, Variety.ANY, 999, 1);
+        this(13 + 31 * 32, null, 999, 1);
     }
 
     public VariedItem copy() {
@@ -79,11 +79,6 @@ public class VariedItem extends Item implements Comparable<VariedItem> {
     @Override
     public boolean isDepleted() {
         return count <= 0;
-    }
-
-    @Override
-    public int compareTo(VariedItem o) {
-        return 0;
     }
 
 }

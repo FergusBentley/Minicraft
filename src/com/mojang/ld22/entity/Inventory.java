@@ -85,9 +85,23 @@ public class Inventory {
 
 	public int count(Item item) {
 		if (item instanceof ResourceItem) {
-			ResourceItem ri = findResource(((ResourceItem)item).resource);
-			if (ri!=null) return ri.count;
-		} else {
+			ResourceItem ri = findResource(((ResourceItem) item).resource);
+			if (ri != null) return ri.count;
+		}
+		else if (item instanceof VariedItem) {
+			VariedItem vi = (VariedItem) item;
+			int count = 0;
+			for (Item has : items) {
+				if (has instanceof VariedItem) {
+					VariedItem vh = (VariedItem) has;
+					if ((vh.variety == vi.variety || vi.variety.getName().equals("ANY")) && vh.getClass() == vi.getClass()) {
+						count += vh.count;
+					}
+				}
+			}
+			return count;
+		}
+		else {
 			int count = 0;
 			for (Item value : items) {
 				if (value.matches(item)) count++;

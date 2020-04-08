@@ -11,7 +11,7 @@ public class PlankItem extends VariedItem {
     }
 
     public PlankItem() {
-        this(Variety.ANY, 0);
+        this(WoodVariety.ANY, 0);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.mojang.ld22.crafting;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.mojang.ld22.entity.Player;
@@ -11,6 +12,8 @@ import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.screen.ListItem;
+import uk.fergcb.minicraft.item.VariedItem;
+import uk.fergcb.minicraft.item.Variety;
 
 public abstract class Recipe implements ListItem {
 	public final List<Item> costs = new ArrayList<>();
@@ -28,11 +31,32 @@ public abstract class Recipe implements ListItem {
 		return this;
 	}
 
+	public Recipe addCost(VariedItem item) {
+		costs.add(item);
+		return this;
+	}
+
 	public void checkCanCraft(Player player) {
 		for (Item item : costs) {
 			if (item instanceof ResourceItem) {
 				ResourceItem ri = (ResourceItem) item;
 				if (!player.inventory.hasResources(ri.resource, ri.count)) {
+					canCraft = false;
+					return;
+				}
+			}
+			if (item instanceof VariedItem) {
+				VariedItem vi = (VariedItem) item;
+				int needs = vi.count;
+				for (Item has : player.inventory.items) {
+					if (has instanceof VariedItem) {
+						VariedItem vh = (VariedItem) has;
+						if ((vi.variety == vh.variety || vi.variety.getName().equals("ANY")) && vi.getClass() == vh.getClass()) {
+							needs -= vh.count;
+						}
+					}
+				}
+				if (needs > 0) {
 					canCraft = false;
 					return;
 				}
@@ -52,6 +76,24 @@ public abstract class Recipe implements ListItem {
 			if (item instanceof ResourceItem) {
 				ResourceItem ri = (ResourceItem) item;
 				player.inventory.removeResource(ri.resource, ri.count);
+			}
+			if (item instanceof VariedItem) {
+				VariedItem vi = (VariedItem) item;
+				int needs = vi.count;
+				Iterator<Item> it = player.inventory.items.iterator();
+				while (it.hasNext()) {
+					Item has = it.next();
+					if (has instanceof VariedItem) {
+						VariedItem vh = (VariedItem) has;
+						if ((vi.variety == vh.variety || vi.variety.getName().equals("ANY")) && vi.getClass() == vh.getClass()) {
+							int toTake = Math.max(needs, vh.count);
+							vh.count -= toTake;
+							needs -= toTake;
+							if (vh.isDepleted())
+								it.remove();
+						}
+					}
+				}
 			}
 		}
 	}

@@ -45,7 +45,7 @@ public class ToolItem extends Item {
 
 	public void renderInventory(Screen screen, int x, int y) {
 		screen.render(x, y, getSprite(), getColor(), 0);
-		Font.draw(getName(), screen, x + 8, y, Color.get(-1, 555, 555, 555));
+		Font.draw(getName(), screen, x + 12, y, Color.get(-1, 555, 555, 555));
 	}
 
 	public String getName() {

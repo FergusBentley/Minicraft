@@ -36,10 +36,10 @@ public class TitleMenu extends Menu {
 		screen.clear(0);
 
 		int h = 2;
-		int w = 13;
-		int titleColor = Color.get(0, 10, 131, 551);
+		int w = 15;
+		int titleColor = Color.get(0, 330, 551, 42);
 		int xo = (screen.w - w * 8) / 2;
-		int yo = 24;
+		int yo = 48;
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
 				screen.render(xo + x * 8, yo + y * 8, x + (y + 6) * 32, titleColor, 0);
@@ -51,9 +51,9 @@ public class TitleMenu extends Menu {
 			int col = Color.get(0, 222, 222, 222);
 			if (i == selected) {
 				msg = "> " + msg + " <";
-				col = Color.get(0, 555, 555, 555);
+				col = Color.get(0, 551, 551, 551);
 			}
-			Font.draw(msg, screen, (screen.w - msg.length() * 8) / 2, (8 + i) * 8, col);
+			Font.draw(msg, screen, (screen.w - msg.length() * 8) / 2, 40 + (8 + i) * 8, col);
 		}
 
 		Font.draw("(Arrow keys,X and C)", screen, 0, screen.h - 8, Color.get(0, 111, 111, 111));

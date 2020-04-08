@@ -24,6 +24,8 @@ import com.mojang.ld22.screen.LevelTransitionMenu;
 import com.mojang.ld22.screen.Menu;
 import com.mojang.ld22.screen.TitleMenu;
 import com.mojang.ld22.screen.WonMenu;
+import uk.fergcb.minicraft.item.PlankItem;
+import uk.fergcb.minicraft.item.WoodVariety;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -88,6 +90,10 @@ public class Game extends Canvas implements Runnable {
 		player.findStartPos(level);
 
 		level.add(player);
+		player.inventory.add(new PlankItem(WoodVariety.OAK));
+		player.inventory.add(new PlankItem(WoodVariety.SPRUCE));
+		player.inventory.add(new PlankItem(WoodVariety.MAPLE));
+		player.inventory.add(new PlankItem(WoodVariety.BIRCH));
 
 		for (int i = 0; i < 5; i++) {
 			levels[i].trySpawn(5000);
@@ -253,32 +259,34 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void renderGui() {
-		for (int y = 0; y < 2; y++) {
-			for (int x = 0; x < 20; x++) {
-				screen.render(x * 8, screen.h - 16 + y * 8, 12 * 32, Color.get(0, 0, 0, 0), 0);
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 28; x++) {
+				screen.render(x * 8, screen.h - (y + 1) * 8, 12 * 32, Color.get(0, 0, 0, 0), 0);
 			}
 		}
 
 		for (int i = 0; i < 10; i++) {
 			if (i < player.health)
-				screen.render(i * 8, screen.h - 16, 12 * 32, Color.get(0, 200, 500, 533), 0);
+				screen.render(i * 8, screen.h - 24, 12 * 32, Color.get(0, 200, 500, 533), 0);
 			else
-				screen.render(i * 8, screen.h - 16, 12 * 32, Color.get(0, 100, 0, 0), 0);
+				screen.render(i * 8, screen.h - 24, 12 * 32, Color.get(0, 100, 0, 0), 0);
 
 			if (player.staminaRechargeDelay > 0) {
 				if (player.staminaRechargeDelay / 4 % 2 == 0)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 555, 0, 0), 0);
+					screen.render(i * 8, screen.h - 16, 1 + 12 * 32, Color.get(0, 555, 0, 0), 0);
 				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
+					screen.render(i * 8, screen.h - 16, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
 			} else {
 				if (i < player.stamina)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 220, 550, 553), 0);
+					screen.render(i * 8, screen.h - 16, 1 + 12 * 32, Color.get(0, 220, 550, 553), 0);
 				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
+					screen.render(i * 8, screen.h - 16, 1 + 12 * 32, Color.get(0, 110, 0, 0), 0);
 			}
+
+			screen.render(i * 8, screen.h - 8, 2 + 12 * 32, Color.get(0, 110, 330, 550), 0);
 		}
 		if (player.activeItem != null) {
-			player.activeItem.renderInventory(screen, 10 * 8, screen.h - 16);
+			player.activeItem.renderInventory(screen, 4 + 10 * 8, screen.h - 22);
 		}
 
 		if (menu != null) {

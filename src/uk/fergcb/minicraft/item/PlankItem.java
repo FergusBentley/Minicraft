@@ -1,5 +1,14 @@
 package uk.fergcb.minicraft.item;
 
+import com.mojang.ld22.entity.Player;
+import com.mojang.ld22.level.Level;
+import com.mojang.ld22.level.tile.GrassTile;
+import com.mojang.ld22.level.tile.HoleTile;
+import com.mojang.ld22.level.tile.Tile;
+import uk.fergcb.minicraft.level.tile.WoodFloorTile;
+
+import java.util.Arrays;
+
 public class PlankItem extends VariedItem {
 
     public PlankItem(Variety variety, int count) {
@@ -17,6 +26,22 @@ public class PlankItem extends VariedItem {
     @Override
     public String getName() {
         return variety.getName() + " PLANK";
+    }
+
+    @Override
+    public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
+        int data = Arrays.asList(WoodVariety.values()).indexOf(variety);
+        if (tile.getClass().equals(HoleTile.class)) {
+            level.setTile(xt, yt, Tile.woodPlank, data);
+            count -= 1;
+            return true;
+        }
+        else if (tile.getClass().equals(WoodFloorTile.class) && level.getData(xt, yt) == data) {
+            level.setTile(xt, yt, Tile.woodWall, data);
+            count -= 1;
+            return true;
+        }
+        return false;
     }
 
 }

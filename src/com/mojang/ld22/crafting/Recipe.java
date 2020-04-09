@@ -86,11 +86,12 @@ public abstract class Recipe implements ListItem {
 					if (has instanceof VariedItem) {
 						VariedItem vh = (VariedItem) has;
 						if ((vi.variety == vh.variety || vi.variety.getName().equals("ANY")) && vi.getClass() == vh.getClass()) {
-							int toTake = Math.max(needs, vh.count);
+							int toTake = Math.min(needs, vh.count);
 							vh.count -= toTake;
 							needs -= toTake;
 							if (vh.isDepleted())
 								it.remove();
+							if (needs <= 0) return;
 						}
 					}
 				}

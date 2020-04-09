@@ -4,17 +4,29 @@ import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
+import com.mojang.ld22.level.Level;
 
 public class Slime extends Mob {
 	private int xa, ya;
 	private int jumpTime = 0;
 	private final int lvl;
+	int sx, sy;
 
 	public Slime(int lvl) {
 		this.lvl = lvl;
 		x = random.nextInt(64 * 16);
 		y = random.nextInt(64 * 16);
+		sx = x;
+		sy = y;
 		health = maxHealth = lvl * lvl * 5;
+	}
+
+	@Override
+	public boolean findStartPos(Level level) {
+		boolean res = super.findStartPos(level);
+		sx = x;
+		sy = y;
+		return res;
 	}
 
 	public void tick() {
@@ -75,6 +87,10 @@ public class Slime extends Mob {
 		}
 
 		int col = Color.get(-1, 10, 252, 555);
+		if (lvl == 1) {
+			int gc = level.getGrassColor(sx / 16, sy / 16);
+			col = Color.get(-1, Color.sub(gc, 212), Color.add(gc, 10), Color.add(gc, 232));
+		}
 		if (lvl == 2) col = Color.get(-1, 100, 522, 555);
 		if (lvl == 3) col = Color.get(-1, 111, 444, 555);
 		if (lvl == 4) col = Color.get(-1, 0, 111, 224);

@@ -21,10 +21,10 @@ public class Level {
 	public final byte[] tiles;
 	public final byte[] data;
 	public final byte[] biome;
+	public final int[] grassColor;
+	public final int[] dirtColor;
 	public final List<Entity>[] entitiesInTiles;
 
-	public final int grassColor = 141;
-	public final int dirtColor = 322;
 	public final int snowColor = 455;
 	public final int sandColor = 550;
 	private final int depth;
@@ -61,6 +61,15 @@ public class Level {
 				for (int x = 0; x < w; x++) {
 					biome[x + y * w] = (byte)Arrays.asList(BiomeType.values()).indexOf(BiomeType.CAVE);
 				}
+			}
+		}
+
+		this.grassColor = new int[w * h];
+		this.dirtColor = new int[w * h];
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				grassColor[x + y * w] = calculateGrassColor(x, y);
+				dirtColor[x + y * w] = calculateDirtColor(x, y);
 			}
 		}
 
@@ -201,6 +210,14 @@ public class Level {
 	}
 
 	public int getGrassColor(int x, int y) {
+		return grassColor[x + y * w];
+	}
+
+	public int getDirtColor(int x, int y) {
+		return dirtColor[x + y * w];
+	}
+
+	public int calculateGrassColor(int x, int y) {
 		int r = 0, g = 0, b = 0;
 		int radius = 1;
 		int count = 0;
@@ -219,19 +236,24 @@ public class Level {
 		return Color.fromRGB(r / count, g / count, b / count);
 	}
 
-	public int getDirtColor(int x, int y) {
+	public int calculateDirtColor(int x, int y) {
 		int r = 0, g = 0, b = 0;
 		int radius = 1;
 		int count = 0;
+		BiomeType tb = getBiome(x, y);
 		for(int yy = -radius; yy <= radius; yy++) {
 			for(int xx = -radius; xx <= radius; xx++) {
-				count += 1;
-				int col = getBiome(x + xx, y + yy).getDirtColor();
-				r += Color.red(col);
-				g += Color.green(col);
-				b += Color.blue(col);
+				BiomeType bi = getBiome(x + xx, y + yy);
+				if (!bi.equals(BiomeType.OCEAN)) {
+					count += 1;
+					int col = bi.getDirtColor();
+					r += Color.red(col);
+					g += Color.green(col);
+					b += Color.blue(col);
+				}
 			}
 		}
+		if (count == 0) return tb.getDirtColor();
 		return Color.fromRGB(r / count, g / count, b / count);
 	}
 

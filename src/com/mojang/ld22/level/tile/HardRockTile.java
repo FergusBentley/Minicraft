@@ -22,7 +22,7 @@ public class HardRockTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(334, 334, 223, 223);
-		int transitionColor = Color.get(1, 334, 445, level.dirtColor);
+		int transitionColor = Color.get(1, 334, 445, level.getDirtColor(x, y));
 
 		boolean u = level.getTile(x, y - 1) != this;
 		boolean d = level.getTile(x, y + 1) != this;

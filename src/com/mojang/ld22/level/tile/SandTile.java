@@ -21,7 +21,7 @@ public class SandTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(level.sandColor + 2, level.sandColor, level.sandColor - 110, level.sandColor - 110);
-		int transitionColor = Color.get(level.sandColor - 110, level.sandColor, level.sandColor - 110, level.dirtColor);
+		int transitionColor = Color.get(level.sandColor - 110, level.sandColor, level.sandColor - 110, level.getDirtColor(x, y));
 
 		boolean u = !level.getTile(x, y - 1).connectsToSand;
 		boolean d = !level.getTile(x, y + 1).connectsToSand;

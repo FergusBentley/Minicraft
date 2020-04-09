@@ -13,7 +13,7 @@ public class StairsTile extends Tile {
 	}
 
 	public void render(Screen screen, Level level, int x, int y) {
-		int color = Color.get(level.dirtColor, 0, 333, 444);
+		int color = Color.get(level.getDirtColor(x, y), 0, 333, 444);
 		int xt = 0;
 		if (leadsUp) xt = 2;
 		screen.render(x * 16, y * 16, xt + 2 * 32, color, 0);

@@ -19,7 +19,7 @@ public class DirtTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int dc = level.getDirtColor(x, y);
-		int col = Color.get(dc, dc, dc - 111, dc - 111);
+		int col = Color.get(dc, dc, Color.darken(dc), Color.darken(dc));
 		screen.render(x * 16, y * 16, 0, col, 0);
 		screen.render(x * 16 + 8, y * 16, 1, col, 0);
 		screen.render(x * 16, y * 16 + 8, 2, col, 0);

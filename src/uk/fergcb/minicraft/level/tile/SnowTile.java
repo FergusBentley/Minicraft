@@ -22,7 +22,7 @@ public class SnowTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(Color.lighten(level.snowColor), level.snowColor, Color.sub(level.snowColor, 110), Color.sub(level.snowColor, 110));
-		int transitionColor = Color.get(Color.sub(level.snowColor, 110), level.snowColor, Color.sub(level.snowColor, 110), level.dirtColor);
+		int transitionColor = Color.get(Color.sub(level.snowColor, 110), level.snowColor, Color.sub(level.snowColor, 110), level.getDirtColor(x, y));
 
 		boolean u = !level.getTile(x, y - 1).connectsToSnow;
 		boolean d = !level.getTile(x, y + 1).connectsToSnow;

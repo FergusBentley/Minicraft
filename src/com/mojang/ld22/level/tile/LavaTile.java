@@ -19,7 +19,7 @@ public class LavaTile extends Tile {
 	public void render(Screen screen, Level level, int x, int y) {
 		wRandom.setSeed((tickCount + (x / 2 - y) * 4311) / 10 * 54687121L + x * 3271612L + y * 3412987161L);
 		int col = Color.get(500, 500, 520, 550);
-		int transitionColor1 = Color.get(3, 500, level.dirtColor - 111, level.dirtColor);
+		int transitionColor1 = Color.get(3, 500, level.getDirtColor(x, y) - 111, level.getDirtColor(x, y));
 		int transitionColor2 = Color.get(3, 500, level.sandColor - 110, level.sandColor);
 
 		boolean u = !level.getTile(x, y - 1).connectsToLava;

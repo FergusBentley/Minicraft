@@ -22,7 +22,7 @@ public class RockTile extends Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(444, 444, 333, 333);
-		int transitionColor = Color.get(111, 444, 555, level.dirtColor);
+		int transitionColor = Color.get(111, 444, 555, level.getDirtColor(x, y));
 
 		boolean u = level.getTile(x, y - 1) != this;
 		boolean d = level.getTile(x, y + 1) != this;

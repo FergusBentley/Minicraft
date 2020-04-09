@@ -26,7 +26,7 @@ public class Crafting {
 			workbenchRecipes.add(new FurnitureRecipe(Lantern.class).addCost(Resource.stone, 5).addCost(Resource.slime, 10).addCost(Resource.glass, 4));
 
 			workbenchRecipes.add(new FurnitureRecipe(Oven.class).addCost(Resource.stone, 15));
-			workbenchRecipes.add(new FurnitureRecipe(Furnace.class).addCost(new PlankItem(WoodVariety.ANY, 20)));
+			workbenchRecipes.add(new FurnitureRecipe(Furnace.class).addCost(Resource.stone, 20));
 			workbenchRecipes.add(new FurnitureRecipe(Workbench.class).addCost(new PlankItem(WoodVariety.ANY, 20)));
 			workbenchRecipes.add(new FurnitureRecipe(Chest.class).addCost(new PlankItem(WoodVariety.ANY, 20)));
 			workbenchRecipes.add(new FurnitureRecipe(Anvil.class).addCost(Resource.ironIngot, 5));

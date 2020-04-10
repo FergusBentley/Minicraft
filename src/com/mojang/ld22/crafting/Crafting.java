@@ -2,17 +2,15 @@ package com.mojang.ld22.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
-import com.mojang.ld22.entity.Anvil;
-import com.mojang.ld22.entity.Chest;
-import com.mojang.ld22.entity.Furnace;
-import com.mojang.ld22.entity.Oven;
-import com.mojang.ld22.entity.Lantern;
-import com.mojang.ld22.entity.Workbench;
+import com.mojang.ld22.entity.*;
 import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
+import uk.fergcb.minicraft.crafting.GenericRecipe;
 import uk.fergcb.minicraft.item.PlankItem;
 import uk.fergcb.minicraft.item.Variety;
+import uk.fergcb.minicraft.item.WoodDoorItem;
 import uk.fergcb.minicraft.item.WoodVariety;
 
 public class Crafting {
@@ -23,6 +21,12 @@ public class Crafting {
 
 	static {
 		try {
+
+			workbenchRecipes.add(new GenericRecipe(new WoodDoorItem()).setCraft(player -> {
+				player.inventory.add(new WoodDoorItem());
+				return null;
+			}).addCost(new PlankItem(WoodVariety.ANY, 4)));
+
 			workbenchRecipes.add(new FurnitureRecipe(Lantern.class).addCost(Resource.stone, 5).addCost(Resource.slime, 10).addCost(Resource.glass, 4));
 
 			workbenchRecipes.add(new FurnitureRecipe(Oven.class).addCost(Resource.stone, 15));

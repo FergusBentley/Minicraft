@@ -48,6 +48,7 @@ public class Tile {
 	public static final Tile spruceSapling = new SaplingTile(30, grass, spruce);
 	public static final Tile woodPlank = new WoodFloorTile(31);
 	public static final Tile woodWall = new WoodWallTile(32);
+	public static final Tile woodDoor = new WoodDoorTile(33);
 
 	public static final Tile ironOre = new OreTile(19, Resource.ironOre);
 	public static final Tile goldOre = new OreTile(20, Resource.goldOre);

@@ -15,7 +15,7 @@ public class WoodDoorItem extends GenericItem {
 
     public boolean interactOn(Tile tile, Level level, int xt, int yt, Player player, int attackDir) {
         if (tile.getClass().equals(WoodFloorTile.class)) {
-            level.setTile(xt, yt, Tile.woodDoor, level.getData(xt, yt) * 10);
+            level.setTile(xt, yt, Tile.woodDoor, (attackDir < 2 ? 0 : 1) * 100 + level.getData(xt, yt) * 10);
             depleted = true;
             return true;
         }

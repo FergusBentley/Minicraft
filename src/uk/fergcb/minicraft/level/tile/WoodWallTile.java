@@ -11,7 +11,7 @@ import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.item.PlankItem;
-import uk.fergcb.minicraft.item.WoodVariety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 public class WoodWallTile extends Tile {
 

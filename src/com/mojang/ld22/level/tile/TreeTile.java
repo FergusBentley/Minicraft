@@ -15,7 +15,7 @@ import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import uk.fergcb.minicraft.item.PlankItem;
-import uk.fergcb.minicraft.item.WoodVariety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 public class TreeTile extends Tile {
 	public TreeTile(int id) {

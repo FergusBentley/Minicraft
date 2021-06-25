@@ -4,7 +4,8 @@ import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.GrassTile;
 import com.mojang.ld22.level.tile.Tile;
-import uk.fergcb.minicraft.level.tile.LongGrassTile;
+import uk.fergcb.minicraft.variety.FlowerVariety;
+import uk.fergcb.minicraft.variety.Variety;
 
 import java.util.Arrays;
 

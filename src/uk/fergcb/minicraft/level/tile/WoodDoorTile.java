@@ -12,7 +12,7 @@ import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.item.WoodDoorItem;
-import uk.fergcb.minicraft.item.WoodVariety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 public class WoodDoorTile extends Tile {
 	public WoodDoorTile(int id) {

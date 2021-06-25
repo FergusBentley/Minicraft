@@ -2,16 +2,14 @@ package com.mojang.ld22.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import com.mojang.ld22.entity.*;
 import com.mojang.ld22.item.ToolType;
 import com.mojang.ld22.item.resource.Resource;
 import uk.fergcb.minicraft.crafting.GenericRecipe;
 import uk.fergcb.minicraft.item.PlankItem;
-import uk.fergcb.minicraft.item.Variety;
 import uk.fergcb.minicraft.item.WoodDoorItem;
-import uk.fergcb.minicraft.item.WoodVariety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 public class Crafting {
 	public static final List<Recipe> anvilRecipes = new ArrayList<>();

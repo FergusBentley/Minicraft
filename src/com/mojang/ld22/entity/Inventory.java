@@ -7,7 +7,7 @@ import com.mojang.ld22.item.Item;
 import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 import uk.fergcb.minicraft.item.VariedItem;
-import uk.fergcb.minicraft.item.Variety;
+import uk.fergcb.minicraft.variety.Variety;
 
 public class Inventory {
 	public final List<Item> items = new ArrayList<>();

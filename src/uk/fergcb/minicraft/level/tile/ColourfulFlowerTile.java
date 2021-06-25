@@ -6,15 +6,13 @@ import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.gfx.Color;
 import com.mojang.ld22.gfx.Screen;
 import com.mojang.ld22.item.Item;
-import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.ToolItem;
 import com.mojang.ld22.item.ToolType;
-import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.GrassTile;
 import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.item.FlowerItem;
-import uk.fergcb.minicraft.item.FlowerVariety;
+import uk.fergcb.minicraft.variety.FlowerVariety;
 
 public class ColourfulFlowerTile extends GrassTile {
 

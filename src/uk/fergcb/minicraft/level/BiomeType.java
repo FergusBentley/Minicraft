@@ -1,7 +1,7 @@
 package uk.fergcb.minicraft.level;
 
 import com.mojang.ld22.level.tile.Tile;
-import uk.fergcb.minicraft.item.FlowerVariety;
+import uk.fergcb.minicraft.variety.FlowerVariety;
 
 import java.util.Random;
 

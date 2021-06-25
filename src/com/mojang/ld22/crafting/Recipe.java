@@ -13,7 +13,6 @@ import com.mojang.ld22.item.ResourceItem;
 import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.screen.ListItem;
 import uk.fergcb.minicraft.item.VariedItem;
-import uk.fergcb.minicraft.item.Variety;
 
 public abstract class Recipe implements ListItem {
 	public final List<Item> costs = new ArrayList<>();

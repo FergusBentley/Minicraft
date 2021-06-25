@@ -1,4 +1,4 @@
-package uk.fergcb.minicraft.item;
+package uk.fergcb.minicraft.variety;
 
 public interface Variety {
 

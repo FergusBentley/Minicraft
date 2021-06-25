@@ -16,7 +16,7 @@ import com.mojang.ld22.item.resource.Resource;
 import com.mojang.ld22.level.Level;
 import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.item.PlankItem;
-import uk.fergcb.minicraft.item.WoodVariety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 public class SpruceTreeTile extends Tile {
 

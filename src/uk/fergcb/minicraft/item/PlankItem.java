@@ -2,10 +2,11 @@ package uk.fergcb.minicraft.item;
 
 import com.mojang.ld22.entity.Player;
 import com.mojang.ld22.level.Level;
-import com.mojang.ld22.level.tile.GrassTile;
 import com.mojang.ld22.level.tile.HoleTile;
 import com.mojang.ld22.level.tile.Tile;
 import uk.fergcb.minicraft.level.tile.WoodFloorTile;
+import uk.fergcb.minicraft.variety.Variety;
+import uk.fergcb.minicraft.variety.WoodVariety;
 
 import java.util.Arrays;
 

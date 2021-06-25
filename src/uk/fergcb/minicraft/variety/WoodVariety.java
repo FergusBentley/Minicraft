@@ -1,4 +1,4 @@
-package uk.fergcb.minicraft.item;
+package uk.fergcb.minicraft.variety;
 
 import com.mojang.ld22.gfx.Color;
 
